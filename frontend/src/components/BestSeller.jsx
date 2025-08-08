@@ -13,7 +13,9 @@ const BestSeller = () => {
       try {
         setLoading(true);
         const availableProducts = await getAvailableProducts();
-        const bestProducts = availableProducts.filter(item => item.bestseller);
+        const bestProducts = availableProducts.filter(
+          (item) => item.bestseller
+        );
         setBestSeller(bestProducts.slice(0, 6));
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -31,11 +33,14 @@ const BestSeller = () => {
           Best Sellers
         </h2>
         <p className="text-gray-700 dark:text-gray-300 mb-10 text-center max-w-2xl mx-auto">
-          Our most popular gaming laptops, trusted by Nigerian gamers. All bestsellers come with warranty and after-sales support.
+          Our most popular gaming laptops, trusted by Nigerian gamers. All
+          bestsellers come with warranty and after-sales support.
         </p>
         {loading ? (
           <div className="flex justify-center items-center py-20 min-h-[300px]">
-            <span className="text-purple-700 text-xl font-bold animate-pulse">Loading best sellers...</span>
+            <span className="text-purple-700 text-xl font-bold animate-pulse">
+              Loading best sellers...
+            </span>
           </div>
         ) : (
           <>
@@ -51,9 +56,6 @@ const BestSeller = () => {
                     image={item.image}
                     basePrice={item.basePrice}
                     inStock={item.inStock}
-                    warranty={item.warranty}
-                    brand={item.brand}
-                    condition={item.condition}
                     variations={item.variations}
                   />
                 </div>
@@ -75,26 +77,6 @@ const BestSeller = () => {
 };
 
 export default BestSeller;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -120,7 +102,7 @@ export default BestSeller;
 //         setLoading(false);
 //       }
 //     };
-    
+
 //     fetchProducts();
 //   }, []);
 
@@ -162,8 +144,8 @@ export default BestSeller;
 //             </div>
 
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/menu" 
+//               <Link
+//                 to="/menu"
 //                 className="inline-block px-8 py-3 bg-[#6d28d9] text-white rounded-lg font-medium hover:bg-[#006641] transition-colors"
 //               >
 //                 Explore All Fragrances
@@ -177,30 +159,6 @@ export default BestSeller;
 // };
 
 // export default BestSeller;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -226,7 +184,7 @@ export default BestSeller;
 //         setLoading(false);
 //       }
 //     };
-    
+
 //     fetchProducts();
 //   }, []);
 
@@ -268,8 +226,8 @@ export default BestSeller;
 //             </div>
 
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/products" 
+//               <Link
+//                 to="/products"
 //                 className="inline-block px-8 py-3 bg-[#6d28d9] text-white rounded-lg font-medium hover:bg-[#006641] transition-colors"
 //               >
 //                 Explore All Dishes
@@ -283,37 +241,6 @@ export default BestSeller;
 // };
 
 // export default BestSeller;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -339,7 +266,7 @@ export default BestSeller;
 //         setLoading(false);
 //       }
 //     };
-    
+
 //     fetchProducts();
 //   }, []);
 
@@ -384,8 +311,8 @@ export default BestSeller;
 //             </div>
 
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/products" 
+//               <Link
+//                 to="/products"
 //                 className="inline-block px-8 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors"
 //               >
 //                 Explore All Fragrances
@@ -399,36 +326,6 @@ export default BestSeller;
 // };
 
 // export default BestSeller;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -454,7 +351,7 @@ export default BestSeller;
 //         setLoading(false);
 //       }
 //     };
-    
+
 //     fetchProducts();
 //   }, []);
 
@@ -494,8 +391,8 @@ export default BestSeller;
 //             </div>
 
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/menu" 
+//               <Link
+//                 to="/menu"
 //                 className="inline-block px-8 py-3 bg-[#008753] text-white rounded-lg font-medium hover:bg-[#006641] transition-colors"
 //               >
 //                 Explore All Dishes
@@ -509,24 +406,6 @@ export default BestSeller;
 // };
 
 // export default BestSeller;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -546,7 +425,7 @@ export default BestSeller;
 //       setBestSeller(bestProduct.slice(0, 5));
 //       setLoading(false);
 //     }, 1500);
-    
+
 //     return () => clearTimeout(timer);
 //   }, [products]);
 
@@ -590,8 +469,8 @@ export default BestSeller;
 
 //             {/* View More Button */}
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/menu" 
+//               <Link
+//                 to="/menu"
 //                 className="inline-block px-8 py-3 bg-[#008753] text-white rounded-lg font-medium hover:bg-[#006641] transition-colors"
 //               >
 //                 Explore All Dishes
@@ -605,31 +484,6 @@ export default BestSeller;
 // };
 
 // export default BestSeller;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -679,8 +533,8 @@ export default BestSeller;
 
 //         {/* View More Button */}
 //         <div className="text-center mt-12">
-//           <Link 
-//             to="/menu" 
+//           <Link
+//             to="/menu"
 //             className="inline-block px-8 py-3 bg-[#008753] text-white rounded-lg font-medium hover:bg-[#006641] transition-colors"
 //           >
 //             Explore All Dishes
@@ -692,32 +546,6 @@ export default BestSeller;
 // };
 
 // export default BestSeller;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";

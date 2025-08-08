@@ -1,30 +1,34 @@
-import React from 'react';
-import { FaStar } from 'react-icons/fa';
-import { assets } from '../assets/assets';
+import React from "react";
+import { FaStar } from "react-icons/fa";
+import { assets } from "../assets/assets";
 
 const Testimonials = () => {
+  // Replace with gaming laptop customer stories, images, and YouTube video IDs
   const testimonials = [
     {
-      name: "Chioma Nwokeke",
-      location: "Ibadan",
-      role: "Luxury Retailer",
-      text: "Scent Design's Bespoke Fragrances has become our top-selling fragrance at our Ikoyi boutique. Our GCC clients appreciate the authentic Fragrance in each bottle.",
-      image: assets.cs3
-    },
-    {
-      name: "Divine Bello",
-      location: "Abuja",
-      role: "Customer",
-      text: "We've adopted it as the official gift for foreign dignitaries visiting Our Establishment.",
-      image: assets.cs2
-    },
-    {
-      name: "Adaobi Uche",
+      name: "Tobi Adeyemi",
       location: "Lagos",
-      role: "Perfume Academy Graduate",
-      text: "The 6-month training program transformed me from a local herb seller to a certified perfumer. I now supply major hotels in South-East with custom scents.",
-      image: assets.cs4
-    }
+      role: "Pro Gamer & Streamer",
+      text: "My Dolftech gaming laptop is a beast! I unboxed it live on stream and my FPS doubled instantly. If you want to dominate in eSports, this is the plug!",
+      image: assets.carouselmodel,
+      video: "dQw4w9WgXcQ", // Replace with real YouTube ID
+    },
+    {
+      name: "Chidera Okafor",
+      location: "Abuja",
+      role: "Student & Content Creator",
+      text: "I was skeptical at first, but after seeing my friends' unboxing, I had to get mine. Editing videos and gaming is now so smooth. Dolftech made it easy!",
+      image: assets.caucasiandude,
+      video: "3JZ_D3ELwOQ", // Replace with real YouTube ID
+    },
+    {
+      name: "Fatima Bello",
+      location: "Ibadan",
+      role: "Tech Reviewer",
+      text: "The unboxing experience was premium! I posted my review on YouTube and my DMs blew up. Everyone wants to know where I got my laptop. Dolftech is the real deal!",
+      image: assets.carouselmodel1,
+      video: "L_jWHffIx5E", // Replace with real YouTube ID
+    },
   ];
 
   return (
@@ -47,55 +51,63 @@ const Testimonials = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div 
+            <div
               key={index}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-purple-100 hover:shadow-xl transition-shadow"
+              className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg border border-cyan-100 dark:border-cyan-900 hover:shadow-xl transition-shadow flex flex-col items-center"
             >
-              <div className="flex items-center mb-6">
-                <img 
+              <div className="flex flex-col items-center mb-4 w-full">
+                <img
                   src={testimonial.image}
                   alt={testimonial.name}
-                  className="w-16 h-16 rounded-full object-cover border-2 border-purple-600"
+                  className="w-20 h-20 rounded-full object-cover border-4 border-cyan-500 shadow-md mb-2"
                 />
-                <div className="ml-4">
-                  <h3 className="text-xl font-bold text-purple-900">{testimonial.name}</h3>
-                  <p className="text-gray-600">
-                    {testimonial.role}, {testimonial.location}
-                  </p>
-                </div>
+                <h3 className="text-xl font-bold text-cyan-700 dark:text-cyan-300">
+                  {testimonial.name}
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                  {testimonial.role} • {testimonial.location}
+                </p>
               </div>
-              <p className="text-gray-700 italic mb-6 border-l-2 border-purple-600 pl-4">
+              <div className="w-full aspect-video rounded-xl overflow-hidden mb-4 shadow-lg">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${testimonial.video}`}
+                  title={`YouTube video testimonial by ${testimonial.name}`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                  loading="lazy"
+                ></iframe>
+              </div>
+              <p className="text-gray-700 dark:text-gray-200 italic mb-6 border-l-4 border-cyan-500 pl-4 text-lg">
                 "{testimonial.text}"
               </p>
-              <div className="flex space-x-1">
+              <div className="flex space-x-1 mb-2">
                 {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} className="text-amber-500" />
+                  <FaStar key={i} className="text-amber-400" />
                 ))}
               </div>
+              <span className="text-xs text-cyan-600 dark:text-cyan-400 font-semibold">
+                Verified Purchase
+              </span>
             </div>
           ))}
         </div>
 
-        <div className="mt-16 bg-purple-900 text-white rounded-2xl p-8 shadow-xl">
+        <div className="mt-16 bg-gradient-to-r from-cyan-600 to-purple-700 text-white rounded-2xl p-8 shadow-xl">
           <div className="max-w-4xl mx-auto text-center">
-            <h3 className="prata-regular text-3xl font-bold mb-6">Featured In</h3>
-            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div className="bg-white/10 p-6 rounded-xl">
-                <p className="text-l font-bold">Vanguard</p>
-              </div>
-              <div className="bg-white/10 p-6 rounded-xl">
-                <p className="text-l font-bold">ThisDay</p>
-              </div>
-              <div className="bg-white/10 p-6 rounded-xl">
-                <p className="text-l font-bold">BellaNaija</p>
-              </div>
-              <div className="bg-white/10 p-6 rounded-xl">
-                <p className="text-l font-bold">Guardian</p>
-              </div>
-            </div> */}
+            <h3 className="prata-regular text-3xl font-bold mb-6">
+              Why Dolftech?
+            </h3>
             <p className="mt-8 text-lg max-w-2xl mx-auto">
-              "Scent Design NG is revolutionizing African perfumery with its commitment to quality and cultural authenticity"
-              <span className="block mt-2 text-amber-500">- BuzinessDay Nigeria</span>
+              "Dolftech is changing the game for Nigerian gamers and creators.
+              The unboxing experience, performance, and support are unmatched.
+              If you want to level up, this is where you start."
+              <span className="block mt-2 text-amber-300">
+                - TechNaija Reviews
+              </span>
             </p>
           </div>
         </div>

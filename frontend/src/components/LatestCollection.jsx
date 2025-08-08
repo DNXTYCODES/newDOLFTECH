@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import ProductItem from "./ProductItem";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const LatestCollection = () => {
   const { getAvailableProducts } = useContext(ShopContext);
@@ -13,7 +13,9 @@ const LatestCollection = () => {
       try {
         setLoading(true);
         const availableProducts = await getAvailableProducts();
-        const sortedProducts = [...availableProducts].sort((a, b) => new Date(b.date) - new Date(a.date));
+        const sortedProducts = [...availableProducts].sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
         setLatestProducts(sortedProducts.slice(0, 9));
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -25,17 +27,23 @@ const LatestCollection = () => {
   }, []);
 
   return (
-    <section id="products" className="py-16 bg-gradient-to-br from-gray-50 to-cyan-50/30 dark:from-gray-900 dark:to-cyan-900/10">
+    <section
+      id="products"
+      className="py-16 bg-gradient-to-br from-gray-50 to-cyan-50/30 dark:from-gray-900 dark:to-cyan-900/10"
+    >
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="gamer-font text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">
           Latest Collection
         </h2>
         <p className="text-gray-700 dark:text-gray-300 mb-10 text-center max-w-2xl mx-auto">
-          Discover the newest arrivals in premium gaming laptops. All models are UK/US spec and come with warranty.
+          Discover the newest arrivals in premium gaming laptops. All models are
+          UK/US spec and come with warranty.
         </p>
         {loading ? (
           <div className="flex justify-center items-center py-20 min-h-[300px]">
-            <span className="text-cyan-500 text-xl font-bold animate-pulse">Loading latest laptops...</span>
+            <span className="text-cyan-500 text-xl font-bold animate-pulse">
+              Loading latest laptops...
+            </span>
           </div>
         ) : (
           <>
@@ -48,9 +56,6 @@ const LatestCollection = () => {
                   name={item.name}
                   basePrice={item.basePrice}
                   inStock={item.inStock}
-                  warranty={item.warranty}
-                  brand={item.brand}
-                  condition={item.condition}
                   variations={item.variations}
                 />
               ))}
@@ -71,30 +76,6 @@ const LatestCollection = () => {
 };
 
 export default LatestCollection;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -122,7 +103,7 @@ export default LatestCollection;
 //         setLoading(false);
 //       }
 //     };
-    
+
 //     fetchProducts();
 //   }, []);
 
@@ -160,8 +141,8 @@ export default LatestCollection;
 //             </div>
 
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/menu" 
+//               <Link
+//                 to="/menu"
 //                 className="inline-block px-8 py-3 border-2 border-[#6d28d9] text-[#6d28d9] rounded-lg font-medium hover:bg-[#6d28d9] hover:text-white transition-colors"
 //               >
 //                 View Full Collection
@@ -175,23 +156,6 @@ export default LatestCollection;
 // };
 
 // export default LatestCollection;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -219,7 +183,7 @@ export default LatestCollection;
 //         setLoading(false);
 //       }
 //     };
-    
+
 //     fetchProducts();
 //   }, []);
 
@@ -257,8 +221,8 @@ export default LatestCollection;
 //             </div>
 
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/products" 
+//               <Link
+//                 to="/products"
 //                 className="inline-block px-8 py-3 border-2 border-[#6d28d9] text-[#6d28d9] rounded-lg font-medium hover:bg-[#6d28d9] hover:text-white transition-colors"
 //               >
 //                 View Full Products
@@ -272,31 +236,6 @@ export default LatestCollection;
 // };
 
 // export default LatestCollection;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -321,7 +260,7 @@ export default LatestCollection;
 //         setLoading(false);
 //       }
 //     };
-    
+
 //     fetchProducts();
 //   }, []);
 
@@ -362,8 +301,8 @@ export default LatestCollection;
 //             </div>
 
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/products" 
+//               <Link
+//                 to="/products"
 //                 className="inline-block px-8 py-3 border-2 border-purple-600 text-purple-600 rounded-lg font-medium hover:bg-purple-50 transition-colors"
 //               >
 //                 View All Collections
@@ -377,26 +316,6 @@ export default LatestCollection;
 // };
 
 // export default LatestCollection;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -422,7 +341,7 @@ export default LatestCollection;
 //         setLoading(false);
 //       }
 //     };
-    
+
 //     fetchProducts();
 //   }, []);
 
@@ -458,8 +377,8 @@ export default LatestCollection;
 //             </div>
 
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/menu" 
+//               <Link
+//                 to="/menu"
 //                 className="inline-block px-8 py-3 border-2 border-[#6d28d9] text-[#6d28d9] rounded-lg font-medium hover:bg-[#6d28d9] hover:text-white transition-colors"
 //               >
 //                 View Full Menu
@@ -473,27 +392,6 @@ export default LatestCollection;
 // };
 
 // export default LatestCollection;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -513,7 +411,7 @@ export default LatestCollection;
 //       setLatestProducts(products.slice(0, 10));
 //       setLoading(false);
 //     }, 1500);
-    
+
 //     return () => clearTimeout(timer);
 //   }, [products]);
 
@@ -552,8 +450,8 @@ export default LatestCollection;
 
 //             {/* View More Button */}
 //             <div className="text-center mt-12">
-//               <Link 
-//                 to="/menu" 
+//               <Link
+//                 to="/menu"
 //                 className="inline-block px-8 py-3 border-2 border-[#6d28d9] text-[#6d28d9] rounded-lg font-medium hover:bg-[#008753] hover:text-white transition-colors"
 //               >
 //                 View Full Menu
@@ -567,25 +465,6 @@ export default LatestCollection;
 // };
 
 // export default LatestCollection;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";
@@ -630,8 +509,8 @@ export default LatestCollection;
 
 //         {/* View More Button */}
 //         <div className="text-center mt-12">
-//           <Link 
-//             to="/collection" 
+//           <Link
+//             to="/collection"
 //             className="inline-block px-8 py-3 border-2 border-[#008753] text-[#008753] rounded-lg font-medium hover:bg-[#008753] hover:text-white transition-colors"
 //           >
 //             View Full Menu
@@ -643,19 +522,6 @@ export default LatestCollection;
 // };
 
 // export default LatestCollection;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/ShopContext";

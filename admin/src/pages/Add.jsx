@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { assets } from '../assets/assets';
-import axios from 'axios';
-import { backendUrl } from '../App';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { assets } from "../assets/assets";
+import axios from "axios";
+import { backendUrl } from "../App";
+import { toast } from "react-toastify";
 
 const Add = ({ token }) => {
   // Image states
@@ -14,179 +14,143 @@ const Add = ({ token }) => {
   // Form states
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [basePrice, setBasePrice] = useState("");
   const [category, setCategory] = useState("");
   const [bestseller, setBestseller] = useState(false);
   const [inStock, setInStock] = useState(true);
-  
-  // Availability by day states
-  const [availableDays, setAvailableDays] = useState(['everyday']);
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-  // Variations state
-  const [variations, setVariations] = useState({
-    base: { name: "Base", options: [] },
-    side: { name: "Side", options: [] },
-    sizes: [],
-    wrap: { available: false, price: "" }
-  });
+  const [brand, setBrand] = useState("");
+  const [condition, setCondition] = useState("");
+  const [warranty, setWarranty] = useState("");
+  // Variations: for Dolftech, this is ram, storage, cpu, gpu (optional), price
+  const [variations, setVariations] = useState([]); // [{ram: '', storage: '', cpu: '', gpu: '', price: ''}]
 
   // Validate decimal input
   const validateDecimal = (value) => {
     if (value === "") return true;
-    return /^\d*\.?\d*$/.test(value) && 
-           (value.match(/\./g) || []).length <= 1;
+    return /^\d*\.?\d*$/.test(value) && (value.match(/\./g) || []).length <= 1;
   };
 
   // Handle day selection
   const handleDayChange = (day) => {
-    if (day === 'everyday') {
-      setAvailableDays(['everyday']);
+    if (day === "everyday") {
+      setAvailableDays(["everyday"]);
       return;
     }
-    
+
     if (availableDays.includes(day)) {
-      setAvailableDays(availableDays.filter(d => d !== day));
+      setAvailableDays(availableDays.filter((d) => d !== day));
     } else {
-      setAvailableDays([...availableDays.filter(d => d !== 'everyday'), day]);
+      setAvailableDays([...availableDays.filter((d) => d !== "everyday"), day]);
     }
   };
 
   // Handle variation changes
-  const handleVariationChange = (type, key, value) => {
-    setVariations(prev => ({
-      ...prev,
-      [type]: { ...prev[type], [key]: value }
-    }));
-  };
+  // const handleVariationChange = (type, key, value) => {
+  //   setVariations(prev => ({
+  //     ...prev,
+  //     [type]: { ...prev[type], [key]: value }
+  //   }));
+  // };
 
-  // Handle size changes
-  const handleSizeChange = (index, field, value) => {
-    setVariations(prev => {
-      const newSizes = [...prev.sizes];
-      newSizes[index] = { ...newSizes[index], [field]: value };
-      return { ...prev, sizes: newSizes };
+  // Handle variation changes (ram/storage/cpu/gpu/price)
+  const handleVariationChange = (index, field, value) => {
+    setVariations((prev) => {
+      const newVars = [...prev];
+      newVars[index] = { ...newVars[index], [field]: value };
+      return newVars;
     });
   };
 
-  // Add new size
-  const addSize = () => {
-    setVariations(prev => ({
+  // Add new variation
+  const addVariation = () => {
+    setVariations((prev) => [
       ...prev,
-      sizes: [...prev.sizes, { size: "", price: "" }]
-    }));
+      { ram: "", storage: "", cpu: "", gpu: "", price: "" },
+    ]);
   };
 
-  // Remove size
-  const removeSize = (index) => {
-    setVariations(prev => ({
-      ...prev,
-      sizes: prev.sizes.filter((_, i) => i !== index)
-    }));
+  // Remove variation
+  const removeVariation = (index) => {
+    setVariations((prev) => prev.filter((_, i) => i !== index));
   };
 
   // Handle options changes (for base/side)
   const handleOptionsChange = (type, value) => {
-    const options = value.split(',').map(opt => opt.trim());
-    setVariations(prev => ({
+    const options = value.split(",").map((opt) => opt.trim());
+    setVariations((prev) => ({
       ...prev,
-      [type]: { ...prev[type], options }
+      [type]: { ...prev[type], options },
     }));
   };
 
   // Format price on blur
   const formatPriceOnBlur = (value, setter) => {
     if (value === "") return;
-    
-    // Add trailing zero if ends with decimal
-    if (value.endsWith('.')) {
-      setter(value + '0');
-    } 
-    // Add leading zero if starts with decimal
-    else if (value.startsWith('.')) {
-      setter('0' + value);
-    }
-    // Format whole numbers consistently
+    if (value.endsWith(".")) setter(value + "0");
+    else if (value.startsWith(".")) setter("0" + value);
     else {
       const num = parseFloat(value);
-      if (!isNaN(num)) {
-        setter(num.toString());
-      }
+      if (!isNaN(num)) setter(num.toString());
     }
-  };
-
-  // Convert price string to number safely
-  const safePrice = (priceStr) => {
-    if (!priceStr || priceStr.trim() === "") return 0;
-    const num = parseFloat(priceStr);
-    return isNaN(num) ? 0 : num;
   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-
-    // Convert price strings to numbers safely
-    const numericBasePrice = safePrice(basePrice);
-    
-    const numericVariations = {
-      ...variations,
-      sizes: variations.sizes.map(size => ({
-        ...size,
-        price: safePrice(size.price)
-      })),
-      wrap: {
-        ...variations.wrap,
-        price: variations.wrap.available ? safePrice(variations.wrap.price) : 0
-      }
-    };
-
+    // Validate all required fields for each variation
+    if (variations.some((v) => !v.ram || !v.storage || !v.cpu || !v.price)) {
+      toast.error(
+        "Please fill RAM, Storage, CPU, and Price for every variation."
+      );
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
-      formData.append("basePrice", numericBasePrice.toString());
       formData.append("category", category);
       formData.append("bestseller", bestseller);
       formData.append("inStock", inStock);
-      formData.append("variations", JSON.stringify(numericVariations));
-
-      // Append each available day individually
-      availableDays.forEach(day => {
-        formData.append('availableDays', day);
-      });
-
-      // Append images
+      formData.append("brand", brand);
+      formData.append("condition", condition);
+      formData.append("warranty", warranty);
+      // Variations: array of {ram, storage, cpu, gpu, price}
+      formData.append(
+        "variations",
+        JSON.stringify(
+          variations.map((v) => ({
+            ram: v.ram,
+            storage: v.storage,
+            cpu: v.cpu,
+            gpu: v.gpu || "",
+            price: v.price ? parseFloat(v.price) : 0,
+          }))
+        )
+      );
+      // Images
       image1 && formData.append("image1", image1);
       image2 && formData.append("image2", image2);
       image3 && formData.append("image3", image3);
       image4 && formData.append("image4", image4);
-
       const response = await axios.post(
         backendUrl + "/api/product/add",
         formData,
         { headers: { token } }
       );
-
       if (response.data.success) {
         toast.success(response.data.message);
         // Reset form
-        setName('');
-        setDescription('');
-        setBasePrice('');
-        setCategory('');
+        setName("");
+        setDescription("");
+        setCategory("");
         setBestseller(false);
         setInStock(true);
-        setAvailableDays(['everyday']);
+        setBrand("");
+        setCondition("");
+        setWarranty("");
         setImage1(false);
         setImage2(false);
         setImage3(false);
         setImage4(false);
-        setVariations({
-          base: { name: "Base", options: [] },
-          side: { name: "Side", options: [] },
-          sizes: [],
-          wrap: { available: false, price: "" }
-        });
+        setVariations([]);
       } else {
         toast.error(response.data.message);
       }
@@ -197,15 +161,22 @@ const Add = ({ token }) => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-3'>
+    <form
+      onSubmit={onSubmitHandler}
+      className="flex flex-col w-full items-start gap-3"
+    >
       <div>
-        <p className='mb-2'>Upload Image</p>
-        <div className='flex gap-2'>
+        <p className="mb-2">Upload Images (up to 4)</p>
+        <div className="flex gap-2">
           {[1, 2, 3, 4].map((num) => (
             <label key={num} htmlFor={`image${num}`}>
               <img
-                className='w-20'
-                src={!eval(`image${num}`) ? assets.upload_area : URL.createObjectURL(eval(`image${num}`))}
+                className="w-20 h-20 object-cover border rounded"
+                src={
+                  !eval(`image${num}`)
+                    ? assets.upload_area
+                    : URL.createObjectURL(eval(`image${num}`))
+                }
                 alt=""
               />
               <input
@@ -219,99 +190,90 @@ const Add = ({ token }) => {
         </div>
       </div>
 
-      <div className='w-full'>
-        <p className='mb-2'>Product name</p>
+      <div className="w-full">
+        <p className="mb-2">Laptop Name</p>
         <input
           onChange={(e) => setName(e.target.value)}
           value={name}
-          className='w-full max-w-[500px] px-3 py-2 border rounded'
+          className="w-full max-w-[500px] px-3 py-2 border rounded"
           type="text"
-          placeholder='Type here'
+          placeholder="e.g. Alienware M15 R6"
           required
         />
       </div>
 
-      <div className='w-full'>
-        <p className='mb-2'>Product description</p>
+      <div className="w-full">
+        <p className="mb-2">Description</p>
         <textarea
           onChange={(e) => setDescription(e.target.value)}
           value={description}
-          className='w-full max-w-[500px] px-3 py-2 border rounded'
-          placeholder='Write content here'
+          className="w-full max-w-[500px] px-3 py-2 border rounded"
+          placeholder="Describe the laptop, specs, condition, etc."
           required
         />
       </div>
 
-      <div className='flex flex-col sm:flex-row gap-2 w-full sm:gap-8'>
+      <div className="flex flex-col sm:flex-row gap-2 w-full sm:gap-8">
         <div>
-          <p className='mb-2'>Base Price</p>
+          <p className="mb-2">Brand</p>
           <input
-            onChange={(e) => {
-              if (validateDecimal(e.target.value)) {
-                setBasePrice(e.target.value);
-              }
-            }}
-            onBlur={() => formatPriceOnBlur(basePrice, setBasePrice)}
-            value={basePrice}
-            className='w-full px-3 py-2 sm:w-[120px] border rounded'
+            onChange={(e) => setBrand(e.target.value)}
+            value={brand}
+            className="w-full px-3 py-2 border rounded"
             type="text"
-            inputMode="decimal"
-            placeholder='9.99'
+            placeholder="e.g. Alienware, Razer, ASUS ROG"
+            required
           />
         </div>
-
         <div>
-          <p className='mb-2'>Product Category</p>
+          <p className="mb-2">Category</p>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className='w-full px-3 py-2 border rounded'
+            className="w-full px-3 py-2 border rounded"
             required
           >
-               <option value="">Select category</option>
-               <option value="Eau de Parfum">Eau de Parfum</option>
-               <option value="Eau de Toilette">Eau de Toilette</option>
-               <option value="Perfume Oil">Perfume Oil</option>
-               <option value="Bespoke Fragrance">Bespoke Fragrance</option>
-               <option value="Gift Sets">Gift Sets</option>
-               <option value="Miniatures">Miniatures</option>
+            <option value="">Select category</option>
+            <option value="Gaming">Gaming</option>
+            <option value="Business">Business</option>
+            <option value="Ultrabook">Ultrabook</option>
+            <option value="Workstation">Workstation</option>
+            <option value="Convertible">Convertible</option>
+            <option value="Other">Other</option>
           </select>
         </div>
       </div>
 
-      <div className='w-full'>
-        <p className='mb-2'>Availability</p>
-        <div className='flex flex-wrap gap-2'>
-          <button
-            type="button"
-            onClick={() => setAvailableDays(['everyday'])}
-            className={`px-3 py-1 text-sm rounded-full ${
-              availableDays.includes('everyday') 
-                ? 'bg-green-500 text-white' 
-                : 'bg-gray-200 text-gray-700'
-            }`}
+      <div className="flex flex-col sm:flex-row gap-2 w-full sm:gap-8">
+        <div>
+          <p className="mb-2">Condition</p>
+          <select
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+            className="w-full px-3 py-2 border rounded"
+            required
           >
-            Everyday
-          </button>
-          {days.map(day => (
-            <button
-              key={day}
-              type="button"
-              onClick={() => handleDayChange(day)}
-              className={`px-3 py-1 text-sm rounded-full ${
-                availableDays.includes(day) 
-                  ? 'bg-green-500 text-white' 
-                  : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              {day.substring(0, 3)}
-            </button>
-          ))}
+            <option value="">Select condition</option>
+            <option value="New">New</option>
+            <option value="Pre-owned">Pre-owned</option>
+            <option value="Refurbished">Refurbished</option>
+          </select>
+        </div>
+        <div>
+          <p className="mb-2">Warranty</p>
+          <input
+            onChange={(e) => setWarranty(e.target.value)}
+            value={warranty}
+            className="w-full px-3 py-2 border rounded"
+            type="text"
+            placeholder="e.g. 3 months, 6 months"
+            required
+          />
         </div>
       </div>
 
       {/* Stock Status */}
-      <div className='flex gap-2 mt-2 items-center'>
+      <div className="flex gap-2 mt-2 items-center">
         <input
           type="checkbox"
           id="inStock"
@@ -319,59 +281,89 @@ const Add = ({ token }) => {
           onChange={(e) => setInStock(e.target.checked)}
           className="w-5 h-5"
         />
-        <label htmlFor="inStock" className='cursor-pointer'>
+        <label htmlFor="inStock" className="cursor-pointer">
           In Stock
         </label>
       </div>
 
       {/* Bestseller */}
-      <div className='flex gap-2 mt-2 items-center'>
+      <div className="flex gap-2 mt-2 items-center">
         <input
           type="checkbox"
-          id='bestseller'
+          id="bestseller"
           checked={bestseller}
           onChange={(e) => setBestseller(e.target.checked)}
           className="w-5 h-5"
         />
-        <label htmlFor="bestseller" className='cursor-pointer'>
+        <label htmlFor="bestseller" className="cursor-pointer">
           Add to bestseller
         </label>
       </div>
 
       {/* Variations Section */}
       <div className="w-full mt-6 border-t pt-4">
-        {/* Sizes */}
         <div className="mb-4">
-          <label className="block mb-2">Sizes</label>
-          {variations.sizes.map((size, index) => (
-            <div key={index} className="flex gap-2 mb-2">
+          <label className="block mb-2">
+            Laptop Variations (RAM, Storage, CPU, GPU, Price)
+          </label>
+          {variations.map((variation, index) => (
+            <div key={index} className="flex gap-2 mb-2 flex-wrap items-center">
               <input
-                value={size.size}
-                onChange={(e) => handleSizeChange(index, 'size', e.target.value)}
-                className="flex-1 px-3 py-2 border rounded"
-                placeholder="Size name"
+                value={variation.ram}
+                onChange={(e) =>
+                  handleVariationChange(index, "ram", e.target.value)
+                }
+                className="w-28 px-3 py-2 border rounded"
+                placeholder="RAM (e.g. 16GB)"
+                required
               />
               <input
-                value={size.price}
+                value={variation.storage}
+                onChange={(e) =>
+                  handleVariationChange(index, "storage", e.target.value)
+                }
+                className="w-32 px-3 py-2 border rounded"
+                placeholder="Storage (e.g. 1TB HDD, 512GB NVMe)"
+                required
+              />
+              <input
+                value={variation.cpu}
+                onChange={(e) =>
+                  handleVariationChange(index, "cpu", e.target.value)
+                }
+                className="w-40 px-3 py-2 border rounded"
+                placeholder="CPU (e.g. i7-12700H)"
+                required
+              />
+              <input
+                value={variation.gpu}
+                onChange={(e) =>
+                  handleVariationChange(index, "gpu", e.target.value)
+                }
+                className="w-40 px-3 py-2 border rounded"
+                placeholder="GPU (optional, e.g. RTX 4060)"
+              />
+              <input
+                value={variation.price}
                 onChange={(e) => {
                   if (validateDecimal(e.target.value)) {
-                    handleSizeChange(index, 'price', e.target.value);
+                    handleVariationChange(index, "price", e.target.value);
                   }
                 }}
-                onBlur={() => {
-                  formatPriceOnBlur(
-                    size.price, 
-                    (value) => handleSizeChange(index, 'price', value)
-                  );
-                }}
+                onBlur={() =>
+                  formatPriceOnBlur(variation.price, (value) =>
+                    handleVariationChange(index, "price", value)
+                  )
+                }
                 className="w-32 px-3 py-2 border rounded"
-                placeholder="Price"
+                placeholder="Price (₦)"
                 type="text"
                 inputMode="decimal"
+                required
               />
               <button
                 type="button"
-                onClick={() => removeSize(index)}
+                onClick={() => removeVariation(index)}
                 className="px-3 py-2 bg-red-500 text-white rounded"
               >
                 Remove
@@ -380,87 +372,25 @@ const Add = ({ token }) => {
           ))}
           <button
             type="button"
-            onClick={addSize}
+            onClick={addVariation}
             className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
           >
-            Add Size
+            Add Variation
           </button>
         </div>
-
-        {/* Wrap Option */}
-        {/* <div className="mb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <input
-              type="checkbox"
-              id="wrapAvailable"
-              checked={variations.wrap.available}
-              onChange={(e) => handleVariationChange('wrap', 'available', e.target.checked)}
-              className="w-5 h-5"
-            />
-            <label htmlFor="wrapAvailable" className='cursor-pointer'>
-              Offer Wrap Option
-            </label>
-          </div>
-          {variations.wrap.available && (
-            <div className="flex gap-2">
-              <input
-                value={variations.wrap.price}
-                onChange={(e) => {
-                  if (validateDecimal(e.target.value)) {
-                    handleVariationChange('wrap', 'price', e.target.value);
-                  }
-                }}
-                onBlur={() => {
-                  formatPriceOnBlur(
-                    variations.wrap.price, 
-                    (value) => handleVariationChange('wrap', 'price', value)
-                  );
-                }}
-                className="w-32 px-3 py-2 border rounded"
-                placeholder="Wrap price"
-                type="text"
-                inputMode="decimal"
-              />
-            </div>
-          )}
-        </div> */}
       </div>
 
       <button
         type="submit"
-        className='w-28 py-3 mt-4 bg-black text-white rounded'
+        className="w-28 py-3 mt-4 bg-cyan-500 text-white rounded font-bold hover:bg-purple-700 transition-colors"
       >
-        ADD
+        ADD LAPTOP
       </button>
     </form>
   );
 };
 
 export default Add;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState } from 'react';
 // import { assets } from '../assets/assets';
@@ -482,7 +412,7 @@ export default Add;
 //   const [category, setCategory] = useState("");
 //   const [bestseller, setBestseller] = useState(false);
 //   const [inStock, setInStock] = useState(true);
-  
+
 //   // Availability by day states
 //   const [availableDays, setAvailableDays] = useState(['everyday']);
 //   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -507,7 +437,7 @@ export default Add;
 //       setAvailableDays(['everyday']);
 //       return;
 //     }
-    
+
 //     if (availableDays.includes(day)) {
 //       setAvailableDays(availableDays.filter(d => d !== day));
 //     } else {
@@ -560,11 +490,11 @@ export default Add;
 //   // Format price on blur
 //   const formatPriceOnBlur = (value, setter) => {
 //     if (value === "") return;
-    
+
 //     // Add trailing zero if ends with decimal
 //     if (value.endsWith('.')) {
 //       setter(value + '0');
-//     } 
+//     }
 //     // Add leading zero if starts with decimal
 //     else if (value.startsWith('.')) {
 //       setter('0' + value);
@@ -583,7 +513,7 @@ export default Add;
 
 //     // Convert price strings to numbers
 //     const numericBasePrice = basePrice ? parseFloat(basePrice) : 0;
-    
+
 //     const numericVariations = {
 //       ...variations,
 //       sizes: variations.sizes.map(size => ({
@@ -742,8 +672,8 @@ export default Add;
 //             type="button"
 //             onClick={() => setAvailableDays(['everyday'])}
 //             className={`px-3 py-1 text-sm rounded-full ${
-//               availableDays.includes('everyday') 
-//                 ? 'bg-green-500 text-white' 
+//               availableDays.includes('everyday')
+//                 ? 'bg-green-500 text-white'
 //                 : 'bg-gray-200 text-gray-700'
 //             }`}
 //           >
@@ -755,8 +685,8 @@ export default Add;
 //               type="button"
 //               onClick={() => handleDayChange(day)}
 //               className={`px-3 py-1 text-sm rounded-full ${
-//                 availableDays.includes(day) 
-//                   ? 'bg-green-500 text-white' 
+//                 availableDays.includes(day)
+//                   ? 'bg-green-500 text-white'
 //                   : 'bg-gray-200 text-gray-700'
 //               }`}
 //             >
@@ -797,7 +727,7 @@ export default Add;
 //       {/* Variations Section */}
 //       <div className="w-full mt-6 border-t pt-4">
 //         {/* <h3 className="text-lg font-medium mb-4">Meal Variations</h3> */}
-        
+
 //         {/* Base Options */}
 //         {/* <div className="mb-4">
 //           <label className="block mb-2">Base Options (comma separated)</label>
@@ -839,7 +769,7 @@ export default Add;
 //                 }}
 //                 onBlur={() => {
 //                   formatPriceOnBlur(
-//                     size.price, 
+//                     size.price,
 //                     (value) => handleSizeChange(index, 'price', value)
 //                   );
 //                 }}
@@ -891,7 +821,7 @@ export default Add;
 //                 }}
 //                 onBlur={() => {
 //                   formatPriceOnBlur(
-//                     variations.wrap.price, 
+//                     variations.wrap.price,
 //                     (value) => handleVariationChange('wrap', 'price', value)
 //                   );
 //                 }}
@@ -916,30 +846,6 @@ export default Add;
 // };
 
 // export default Add;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState } from 'react';
 // import { assets } from '../assets/assets';
@@ -989,7 +895,7 @@ export default Add;
 //       formData.append("bestseller", bestseller);
 //       formData.append("size", size);
 //       formData.append("culturalOrigin", culturalOrigin);
-      
+
 //       // Append fragrance notes
 //       formData.append("topNotes", fragranceNotes.top);
 //       formData.append("heartNotes", fragranceNotes.heart);
@@ -1034,7 +940,7 @@ export default Add;
 //   return (
 //     <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-4 p-6 bg-purple-50 rounded-xl shadow-lg'>
 //       <h2 className='prata-regular text-2xl text-purple-900 mb-4'>Add New Fragrance</h2>
-      
+
 //       <div className="w-full">
 //         <p className='mb-2 font-medium'>Upload Images (Up to 4)</p>
 //         <div className='flex flex-wrap gap-4'>
@@ -1134,7 +1040,7 @@ export default Add;
 //             required
 //           />
 //         </div>
-// {/* 
+// {/*
 //         <div>
 //           <label className='block mb-2 font-medium'>Cultural Origin</label>
 //           <select
@@ -1214,32 +1120,6 @@ export default Add;
 
 // export default Add;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import React, { useState } from 'react';
 // import { assets } from '../assets/assets';
 // import axios from 'axios';
@@ -1259,7 +1139,7 @@ export default Add;
 //   const [price, setPrice] = useState("");
 //   const [category, setCategory] = useState("");
 //   const [bestseller, setBestseller] = useState(false);
-  
+
 //   // Availability by day states
 //   const [availableDays, setAvailableDays] = useState(['everyday']);
 //   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -1270,7 +1150,7 @@ export default Add;
 //       setAvailableDays(['everyday']);
 //       return;
 //     }
-    
+
 //     if (availableDays.includes(day)) {
 //       setAvailableDays(availableDays.filter(d => d !== day));
 //     } else {
@@ -1325,7 +1205,6 @@ export default Add;
 //   //   }
 //   // };
 
-
 //   // new submit handler
 
 //   const onSubmitHandler = async (e) => {
@@ -1377,8 +1256,6 @@ export default Add;
 //     toast.error(error.message);
 //   }
 // };
-
-
 
 //   return (
 //     <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-3'>
@@ -1464,8 +1341,8 @@ export default Add;
 //             type="button"
 //             onClick={() => setAvailableDays(['everyday'])}
 //             className={`px-3 py-1 text-sm rounded-full ${
-//               availableDays.includes('everyday') 
-//                 ? 'bg-green-500 text-white' 
+//               availableDays.includes('everyday')
+//                 ? 'bg-green-500 text-white'
 //                 : 'bg-gray-200 text-gray-700'
 //             }`}
 //           >
@@ -1477,8 +1354,8 @@ export default Add;
 //               type="button"
 //               onClick={() => handleDayChange(day)}
 //               className={`px-3 py-1 text-sm rounded-full ${
-//                 availableDays.includes(day) 
-//                   ? 'bg-green-500 text-white' 
+//                 availableDays.includes(day)
+//                   ? 'bg-green-500 text-white'
 //                   : 'bg-gray-200 text-gray-700'
 //               }`}
 //             >
@@ -1512,27 +1389,6 @@ export default Add;
 
 // export default Add;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import React, { useState } from 'react'
 // import {assets} from '../assets/assets'
 // import axios from 'axios'
@@ -1558,7 +1414,7 @@ export default Add;
 //     e.preventDefault();
 
 //     try {
-      
+
 //       const formData = new FormData()
 
 //       formData.append("name",name)
@@ -1639,7 +1495,7 @@ export default Add;
 //                   <option value="Women">Women</option>
 //               </select>
 //             </div> */}
-// {/* 
+// {/*
 //             <div>
 //               <p className='mb-2'>Sub category</p>
 //               <select onChange={(e) => setSubCategory(e.target.value)} className='w-full px-3 py-2'>
@@ -1655,14 +1511,14 @@ export default Add;
 //             </div>
 
 //         </div>
-// {/* 
+// {/*
 //         <div>
 //           <p className='mb-2'>Product Sizes</p>
 //           <div className='flex gap-3'>
 //             <div onClick={()=>setSizes(prev => prev.includes("S") ? prev.filter( item => item !== "S") : [...prev,"S"])}>
 //               <p className={`${sizes.includes("S") ? "bg-pink-100" : "bg-slate-200" } px-3 py-1 cursor-pointer`}>S</p>
 //             </div>
-            
+
 //             <div onClick={()=>setSizes(prev => prev.includes("M") ? prev.filter( item => item !== "M") : [...prev,"M"])}>
 //               <p className={`${sizes.includes("M") ? "bg-pink-100" : "bg-slate-200" } px-3 py-1 cursor-pointer`}>M</p>
 //             </div>
