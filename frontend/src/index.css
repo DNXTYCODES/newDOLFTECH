@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-cyan: #00d8ff;
+  --secondary-purple: #7928ca;
+  --accent-red: #ff2d55;
+}
+
+/* Dark mode variables */
+.dark {
+  --primary-cyan: #00a3cc;
+  --secondary-purple: #5a1e9e;
+  --accent-red: #e02045;
+}
+
+* {
+  font-family: 'Exo 2', sans-serif;
+}
+
+.gamer-font {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+}
+
+/* Neon glow effects */
+.neon-glow {
+  text-shadow: 0 0 10px var(--primary-cyan), 
+               0 0 20px rgba(0, 216, 255, 0.5);
+}
+
+.neon-border {
+  box-shadow: 0 0 10px var(--primary-cyan), 
+              inset 0 0 5px var(--primary-cyan);
+}
+
+/* RGB Animation */
+@keyframes rgb-cycle {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.rgb-animated {
+  background: linear-gradient(270deg, #ff2d55, #7928ca, #00d8ff);
+  background-size: 600% 600%;
+  animation: rgb-cycle 4s ease infinite;
+}
+
+/* Theme colors */
+.text-cyan-primary {
+  color: var(--primary-cyan);
+}
+
+.bg-cyan-primary {
+  background-color: var(--primary-cyan);
+}
+
+.border-cyan-primary {
+  border-color: var(--primary-cyan);
+}
+
+.text-purple-secondary {
+  color: var(--secondary-purple);
+}
+
+.bg-purple-secondary {
+  background-color: var(--secondary-purple);
+}
+
+.text-accent-red {
+  color: var(--accent-red);
+}
+
+/* Smooth transitions */
+.theme-transition * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Custom Scrollbar (visible only in dark mode) */
+.dark::-webkit-scrollbar {
+  width: 8px;
+  display: block;
+}
+
+.dark::-webkit-scrollbar-track {
+  background: #1a202c;
+}
+
+.dark::-webkit-scrollbar-thumb {
+  background: var(--secondary-purple);
+  border-radius: 4px;
+}
+
+/* Product card hover effect */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+              0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .product-card:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 216, 255, 0.1),
+              0 10px 10px -5px rgba(121, 40, 202, 0.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary-purple: #6d28d9;
+    --secondary-gold: #f59e0b;
+}
+
+a.active hr {
+    display: block;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.prata-regular {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-style: normal;
+    color: var(--primary-purple);
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width:640px) {
+    a.active {
+        background-color: black;
+        color: white;
+    }
+}
+
+.bg-purple-gradient {
+    background: linear-gradient(to right, rgba(109, 40, 217, 0.1), #FFFBEB);
+}
+
+.text-purple-primary {
+    color: var(--primary-purple);
+}
+
+.bg-purple-primary {
+    background-color: var(--primary-purple);
+}
+
+.border-purple-primary {
+    border-color: var(--primary-purple);
+}
+
+.hover\:bg-purple-700:hover {
+    background-color: #5b21b6;
+}
+
+.text-gold-500 {
+    color: var(--secondary-gold);
+}
+ */
