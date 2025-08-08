@@ -190,22 +190,13 @@ const PlaceOrder = () => {
         const orderItems = Object.entries(cartItems).map(([cartItemKey, cartItem]) => {
             const itemInfo = products.find((product) => product._id === cartItem.productId);
             if (!itemInfo) return null;
-            
+            // Modern laptop variations
             let price = itemInfo.basePrice;
             let variations = {};
-            
-            if (cartItem.variations?.wrap && itemInfo.variations?.wrap?.available) {
-                price = itemInfo.variations.wrap.price;
-                variations.wrap = cartItem.variations.wrap;
-            } 
-            else if (cartItem.variations?.size) {
-                const sizeObj = itemInfo.variations?.sizes?.find(s => s.size === cartItem.variations.size);
-                if (sizeObj) {
-                    price = sizeObj.price;
-                    variations.size = cartItem.variations.size;
-                }
+            if (cartItem.variations) {
+                variations = { ...cartItem.variations };
+                // Optionally, set price based on variation (if needed)
             }
-            
             return {
                 productId: itemInfo._id,
                 name: itemInfo.name,
@@ -406,11 +397,12 @@ const PlaceOrder = () => {
                         <Title text1={'PAYMENT'} text2={'METHOD'} />
                         
                         <div className='flex flex-col gap-3 mt-4'>
-                            {/* <div 
+                            <div 
                                 onClick={() => setMethod('paystack')} 
                                 className={`flex items-center gap-3 border p-3 rounded-lg cursor-pointer transition-all ${
-                                    method === 'paystack' ? 'border-green-500 bg-green-50' : 'border-gray-300 hover:border-gray-400'
+                                    method === 'paystack' ? 'border-green-500 bg-green-50 shadow-lg' : 'border-gray-300 hover:border-gray-400'
                                 }`}
+                                style={{boxShadow: method === 'paystack' ? '0 2px 12px 0 #00C3A0' : undefined}}
                             >
                                 <div className={`min-w-5 h-5 border rounded-full flex items-center justify-center ${
                                     method === 'paystack' ? 'bg-green-500 border-green-500' : 'border-gray-400'
@@ -422,7 +414,10 @@ const PlaceOrder = () => {
                                     )}
                                 </div>
                                 <div>
-                                    <p className='font-medium'>Paystack</p>
+                                    <div className="flex items-center gap-2">
+                                        <img src="https://seeklogo.com/images/P/paystack-logo-0B2E4B0D3E-seeklogo.com.png" alt="Paystack" className="w-6 h-6" />
+                                        <p className='font-medium text-[#00C3A0]'>Paystack</p>
+                                    </div>
                                     <p className='text-sm text-gray-500'>Pay with card, bank transfer, or mobile money</p>
                                     {method === 'paystack' && (
                                         <p className="text-xs text-orange-600 mt-1">
@@ -430,7 +425,7 @@ const PlaceOrder = () => {
                                         </p>
                                     )}
                                 </div>
-                            </div> */}
+                            </div>
                             
                             {/* <div 
                                 onClick={() => setMethod('flutterwave')} 

@@ -59,12 +59,21 @@ const Orders = ({ token }) => {
               <div>
                 <div>
                   {order.items.map((item, index) => {
-                    if (index === order.items.length - 1) {
-                      return <p className='py-0.5' key={index}> {item.name} x {item.quantity} <span> {item.size} </span> </p>
-                    }
-                    else {
-                      return <p className='py-0.5' key={index}> {item.name} x {item.quantity} <span> {item.size} </span> ,</p>
-                    }
+                    // Modern laptop variation display
+                    const variation = item.variation || item.variations || {};
+                    const variationDesc = [
+                      variation.ram ? `RAM: ${variation.ram}` : null,
+                      variation.storage ? `Storage: ${variation.storage}` : null,
+                      variation.cpu ? `CPU: ${variation.cpu}` : null,
+                      variation.gpu ? `GPU: ${variation.gpu}` : null,
+                    ].filter(Boolean).join(', ');
+                    return (
+                      <p className='py-0.5' key={index}>
+                        {item.name} x {item.quantity}
+                        {variationDesc && <span className="ml-2 text-xs text-gray-500">[{variationDesc}]</span>}
+                        {index !== order.items.length - 1 && ','}
+                      </p>
+                    );
                   })}
                 </div>
                 <p className='mt-3 mb-2 font-medium'>{order.address.firstName + " " + order.address.lastName}</p>

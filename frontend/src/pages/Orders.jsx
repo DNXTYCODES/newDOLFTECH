@@ -113,15 +113,14 @@ const Orders = () => {
               <div className="space-y-4">
                 {order.items.map((item, index) => {
                   const product = getProductDetails(item.productId);
-                  
-                  // Generate variation description
-                  let variationDesc = "";
-                  if (item.variations?.base) variationDesc += `Base: ${item.variations.base}, `;
-                  if (item.variations?.side) variationDesc += `Side: ${item.variations.side}, `;
-                  if (item.variations?.size) variationDesc += `Size: ${item.variations.size}, `;
-                  if (item.variations?.wrap) variationDesc += `Wrap: Yes, `;
-                  variationDesc = variationDesc.replace(/,\s*$/, "");
-                  
+                  // Modern laptop variation display
+                  const variation = item.variation || item.variations || {};
+                  const variationDesc = [
+                    variation.ram ? `RAM: ${variation.ram}` : null,
+                    variation.storage ? `Storage: ${variation.storage}` : null,
+                    variation.cpu ? `CPU: ${variation.cpu}` : null,
+                    variation.gpu ? `GPU: ${variation.gpu}` : null,
+                  ].filter(Boolean).join(', ');
                   return (
                     <div key={index} className='py-2 flex items-start gap-4 text-sm'>
                       <img 

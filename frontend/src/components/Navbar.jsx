@@ -35,7 +35,7 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between py-5 font-medium bg-white/95 dark:bg-gray-900/95 border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 lg:px-8 shadow-lg backdrop-blur">
+    <header className="fixed top-0 left-0 w-full z-[9999] flex items-center justify-between py-5 font-medium bg-white/95 dark:bg-gray-900/95 border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 lg:px-8 shadow-2xl backdrop-blur">
       {/* Logo */}
       <Link to="/" className="flex items-center" aria-label="Dolftech Home">
         <div className="flex items-center">

@@ -78,13 +78,13 @@ const Cart = () => {
             Your Cart is Empty
           </h3>
           <p className="text-gray-600 max-w-md mx-auto mb-6">
-            Add some delicious meals to your cart!
+            Add some premium laptops to your cart and experience Dolftech performance!
           </p>
           <button
-            onClick={() => navigate('/menu')}
+            onClick={() => navigate('/list')}
             className="px-6 py-2 bg-[#6d28d9] text-white rounded-lg hover:bg-[#006641] transition-colors"
           >
-            Browse Menu
+            Browse Laptops
           </button>
         </div>
       ) : (
