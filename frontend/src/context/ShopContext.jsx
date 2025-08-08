@@ -353,6 +353,17 @@ const ShopContextProvider = (props) => {
     }
   };
 
+  // Notifications state and fetch
+  const [notifications, setNotifications] = useState([]);
+  const fetchNotifications = async () => {
+    try {
+      const res = await axios.get(backendUrl + "/api/notification");
+      setNotifications(res.data.filter((n) => n.isActive));
+    } catch (err) {
+      // Optionally handle error
+    }
+  };
+
   const value = {
     products,
     currency,
@@ -376,6 +387,8 @@ const ShopContextProvider = (props) => {
     setShowPopup,
     dismissPopup,
     fetchPopup,
+    notifications,
+    fetchNotifications,
     addReview,
     getReviews,
     getUserReview,

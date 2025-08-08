@@ -9,6 +9,7 @@ import {
   FiMoon,
 } from "react-icons/fi";
 import { ShopContext } from "../context/ShopContext";
+import { assets } from "../assets/assets";
 
 const Navbar = ({ toggleDarkMode, isDarkMode }) => {
   const [visible, setVisible] = useState(false);
@@ -34,12 +35,16 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between py-5 font-medium bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 lg:px-8 shadow-lg backdrop-blur bg-opacity-90 dark:bg-opacity-90">
+    <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between py-5 font-medium bg-white/95 dark:bg-gray-900/95 border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 lg:px-8 shadow-lg backdrop-blur">
       {/* Logo */}
       <Link to="/" className="flex items-center" aria-label="Dolftech Home">
         <div className="flex items-center">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 mr-3 flex items-center justify-center">
-            <span className="text-white font-bold text-lg">DT</span>
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 mr-3 flex items-center justify-center overflow-hidden">
+            <img
+              src={assets.blogo}
+              alt="Dolftech Logo"
+              className="w-8 h-8 object-contain"
+            />
           </div>
           <h1 className="gamer-font text-2xl text-gray-900 dark:text-white">
             DOLF<span className="text-cyan-500">TECH</span>
@@ -50,6 +55,55 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
       {/* Desktop Navigation */}
       <nav aria-label="Main navigation">
         <ul className="hidden md:flex gap-8 text-base">
+          <li>
+            <NavLink
+              to="/notifications"
+              className={({ isActive }) =>
+                `flex flex-col items-center px-3 py-1 rounded-lg backdrop-blur-md bg-white/60 dark:bg-gray-800/60 border border-cyan-200/40 dark:border-cyan-900/40 shadow-md transition-all duration-200 ${
+                  isActive
+                    ? "text-cyan-600 font-semibold border-cyan-500 bg-white/80 dark:bg-gray-900/80"
+                    : "text-gray-700 dark:text-gray-300 hover:text-cyan-500 hover:bg-white/80 dark:hover:bg-gray-900/80"
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <span className="flex items-center gap-1">
+                    NOTIFICATIONS
+                    <span className="ml-1 w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+                  </span>
+                  <hr
+                    className={`w-2/4 h-[2px] mt-1 ${
+                      isActive ? "bg-cyan-500" : "bg-transparent"
+                    }`}
+                  />
+                </>
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `flex flex-col items-center ${
+                  isActive
+                    ? "text-cyan-500 font-semibold"
+                    : "text-gray-700 dark:text-gray-300 hover:text-cyan-500"
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <span>ABOUT US</span>
+                  <hr
+                    className={`w-2/4 h-[2px] mt-1 ${
+                      isActive ? "bg-cyan-500" : "bg-transparent"
+                    }`}
+                  />
+                </>
+              )}
+            </NavLink>
+          </li>
           <li>
             <NavLink
               to="/"
@@ -234,9 +288,10 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 bottom-0 bg-white dark:bg-gray-900 w-full max-w-xs transition-transform duration-300 ease-in-out z-[100] ${
+        className={`fixed top-0 right-0 bottom-0 w-full max-w-xs transition-transform duration-300 ease-in-out z-[100] ${
           visible ? "translate-x-0" : "translate-x-full"
-        }`}
+        } bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-2xl border-l border-gray-200 dark:border-gray-800 "+
+        (visible ? " bg-gradient-to-br from-cyan-500/30 via-purple-500/20 to-gray-900/80 dark:from-cyan-900/40 dark:via-purple-900/30 dark:to-gray-900/90" : "")`}
         aria-hidden={!visible}
       >
         <div className="flex flex-col h-full">

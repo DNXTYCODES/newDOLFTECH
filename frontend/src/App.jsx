@@ -22,6 +22,7 @@ import VerifyPayment from "./pages/VerifyPayment";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import LaptopFinder from "./pages/LaptopFinder"; // New component
 import FloatingChatBubbles from "./components/FloatingChatBubbles";
+import NotificationBar from "./components/NotificationBar";
 
 const AppContent = () => {
   const location = useLocation();
@@ -33,7 +34,7 @@ const AppContent = () => {
   }, [location]);
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300 pt-[90px] md:pt-[90px]">
       <GlobalPopup />
       <FloatingChatBubbles />
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
@@ -54,7 +55,8 @@ const AppContent = () => {
             borderRadius: "8px",
           }}
         />
-        <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+        <NotificationBar />
+        <Navbar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
         <SearchBar />
         <Routes>
           <Route path="/" element={<Home />} />

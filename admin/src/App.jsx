@@ -11,6 +11,7 @@ import EditProducts from "./pages/EditProducts"; // Add this import
 import EditProduct from "./pages/EditProduct"; // Add this import
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NotificationAdmin from "./pages/NotificationAdmin";
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const currency = "$";
@@ -38,12 +39,19 @@ const App = () => {
             <div className="w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base">
               <Routes>
                 <Route path="/add" element={<Add token={token} />} />
+                <Route path="/notifications" element={<NotificationAdmin />} />
                 <Route path="/list" element={<List token={token} />} />
                 <Route path="/orders" element={<Orders token={token} />} />
                 <Route path="/popup" element={<Popup token={token} />} />
                 {/* Add route for Edit Products */}
-                <Route path="/edit-products" element={<EditProducts token={token} />} />
-                <Route path="/admin/edit-product/:id" element={<EditProduct token={token} />} />
+                <Route
+                  path="/edit-products"
+                  element={<EditProducts token={token} />}
+                />
+                <Route
+                  path="/admin/edit-product/:id"
+                  element={<EditProduct token={token} />}
+                />
               </Routes>
             </div>
           </div>
@@ -54,30 +62,6 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import Navbar from "./components/Navbar";
