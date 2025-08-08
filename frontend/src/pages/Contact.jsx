@@ -22,22 +22,29 @@ const Contact = () => {
               </p>
             </div>
             <h1 className="gamer-font text-4xl md:text-5xl lg:text-6xl text-cyan-900 dark:text-cyan-300 mb-6 leading-tight">
-              Let's Connect & Level Up
+              Let's Connect, Naija Style 🇳🇬
             </h1>
             <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8">
-              Questions about gaming laptops, orders, or want a custom
-              recommendation? Our team is ready to help you win.
+              Got questions about laptops, orders, or want a recommendation that fits your hustle? Our Ibadan-based team is here for you. We understand NEPA, network wahala, and the need for value for money. Reach out, let’s make tech work for you!
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="tel:+2348130000000"
+                href="tel:+2348028293058"
                 className="px-6 py-3 md:px-8 md:py-3 bg-cyan-600 text-white rounded-lg font-medium hover:bg-cyan-700 transition-colors flex items-center gap-2 text-sm md:text-base"
               >
                 <FiPhone className="text-xl" />
-                Call Us
+                Call Us (Ibadan)
               </a>
               <a
-                href="mailto:hello@dolftech.ng"
+                href="https://wa.me/2348028293058"
+                className="px-6 py-3 md:px-8 md:py-3 border-2 border-green-600 text-green-600 rounded-lg font-medium hover:bg-green-50 transition-colors flex items-center gap-2 text-sm md:text-base"
+                target="_blank" rel="noopener noreferrer"
+              >
+                <img src={assets.whatsapp} alt="WhatsApp" className="w-5 h-5" />
+                WhatsApp Chat
+              </a>
+              <a
+                href="mailto:hello@dolftech.com.ng"
                 className="px-6 py-3 md:px-8 md:py-3 border-2 border-cyan-600 text-cyan-600 rounded-lg font-medium hover:bg-cyan-50 transition-colors flex items-center gap-2 text-sm md:text-base"
               >
                 <FiMail className="text-xl" />
@@ -68,8 +75,9 @@ const Contact = () => {
               icon: <FiMapPin className="text-3xl text-purple-600" />,
               title: "Visit Us",
               details: [
-                "7 oyesina close, opposite 7 ibikunle avenue",
-                "Old Bodija, Ibadan, Nigeria",
+                "7 Oyesina Close, Opposite 7 Ibikunle Avenue,",
+                "Old Bodija, Ibadan, Oyo State, Nigeria",
+                "(Landmark: Close to Bodija Market)"
               ],
               action: {
                 text: "Get Directions",
@@ -81,8 +89,8 @@ const Contact = () => {
               title: "Call Us",
               details: [
                 "Customer Service: +234 802 829 3058",
-                "Wholesale Inquiries: +234 802 829 3058",
-                "Training Academy: +234 802 829 3058",
+                "WhatsApp: +234 802 829 3058",
+                "We speak Yoruba, Pidgin, and English!",
               ],
               action: {
                 text: "Call Now",
@@ -93,9 +101,10 @@ const Contact = () => {
               icon: <FiClock className="text-3xl text-purple-600" />,
               title: "Business Hours",
               details: [
-                "Monday-Friday: 9:00 AM - 6:00 PM",
+                "Monday - Friday: 9:00 AM - 6:00 PM",
                 "Saturday: 10:00 AM - 4:00 PM",
-                "Sunday: Closed",
+                "Sunday: Closed (We dey rest!)",
+                "Public Holidays: Call to confirm"
               ],
               action: {
                 text: "Book Appointment",
@@ -171,7 +180,7 @@ const Contact = () => {
                 <input
                   type="tel"
                   className="w-full px-4 py-3 rounded-lg border border-purple-200 focus:ring-2 focus:ring-purple-600 focus:outline-none"
-                  placeholder="080X XXX XXXX"
+                  placeholder="0802 829 3058 (WhatsApp available)"
                 />
               </div>
 
@@ -179,12 +188,12 @@ const Contact = () => {
                 <label className="block text-gray-700 mb-2">Subject</label>
                 <select className="w-full px-4 py-3 rounded-lg border border-purple-200 focus:ring-2 focus:ring-purple-600 focus:outline-none">
                   <option value="">Select a subject</option>
-                  <option value="product">Product Inquiry</option>
-                  <option value="wholesale">Wholesale Partnership</option>
-                  <option value="training">Training Program</option>
-                  <option value="workshop">Workshop Booking</option>
-                  <option value="appointment">Store Appointment</option>
-                  <option value="other">Other</option>
+                  <option value="product">Laptop Inquiry</option>
+                  <option value="wholesale">Bulk/Wholesale (Schools, Offices, Churches)</option>
+                  <option value="training">Tech Training (Coding, Digital Skills)</option>
+                  <option value="workshop">Workshop/Bootcamp</option>
+                  <option value="appointment">Visit Our Ibadan Store</option>
+                  <option value="other">Other (Let us know!)</option>
                 </select>
               </div>
 
