@@ -15,7 +15,7 @@ import Chatbot from "../components/Chatbot";
 const Home = () => {
   return (
     <div className="bg-gray-50 dark:bg-gray-900 theme-transition">
-      <Chatbot />
+      {/* <Chatbot /> */}
       <Hero />
       <BrandsShowcase />
       <WarrantyBanner />
