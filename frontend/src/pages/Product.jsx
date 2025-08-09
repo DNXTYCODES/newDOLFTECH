@@ -187,13 +187,15 @@ const Product = () => {
   // Actually add to cart after confirmation
   const confirmAddToCart = async () => {
     if (!productData.inStock) return;
-    let variation = null;
+    let variation = {};
     if (
       productData.variations &&
       Array.isArray(productData.variations) &&
       productData.variations.length > 0
     ) {
-      variation = productData.variations[selectedVariationIdx];
+      // Always include price in the variation object
+      const v = productData.variations[selectedVariationIdx];
+      variation = { ...v, price: v.price };
     }
     const product = await addToCart(productData._id, quantity, variation);
     if (product) {

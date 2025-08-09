@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+
 import Home from "./pages/Home";
 import Collection from "./pages/Collection";
 import About from "./pages/About";
@@ -20,9 +21,12 @@ import GlobalPopup from "./components/GlobalPopup";
 import { ShopContext } from "./context/ShopContext";
 import VerifyPayment from "./pages/VerifyPayment";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
-import LaptopFinder from "./pages/LaptopFinder"; // New component
+import LaptopFinder from "./pages/LaptopFinder";
 import FloatingChatBubbles from "./components/FloatingChatBubbles";
 import NotificationBar from "./components/NotificationBar";
+import Profile from "./pages/Profile";
+import Wishlist from "./pages/Wishlist";
+import Settings from "./pages/Settings";
 
 const AppContent = () => {
   const location = useLocation();
@@ -72,6 +76,9 @@ const AppContent = () => {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/verify" element={<VerifyPayment />} />
           <Route path="/laptop-finder" element={<LaptopFinder />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
         <Footer />
       </div>

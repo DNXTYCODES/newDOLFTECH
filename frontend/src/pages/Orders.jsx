@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { ShopContext } from '../context/ShopContext'
-import Title from '../components/Title';
-import axios from 'axios';
-import { assets } from '../assets/assets';
-import DishLoader from '../components/DishLoader';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from "react";
+import { ShopContext } from "../context/ShopContext";
+import Title from "../components/Title";
+import axios from "axios";
+import { assets } from "../assets/assets";
+import DishLoader from "../components/DishLoader";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const { backendUrl, token, currency, products } = useContext(ShopContext);
@@ -19,11 +19,11 @@ const Orders = () => {
       if (!token) return;
 
       const response = await axios.post(
-        backendUrl + '/api/order/userorders', 
-        {}, 
+        backendUrl + "/api/order/userorders",
+        {},
         { headers: { token } }
       );
-      
+
       if (response.data.success) {
         setOrderData(response.data.orders.reverse());
       }
@@ -41,22 +41,22 @@ const Orders = () => {
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
-      case 'delivered':
-        return 'bg-green-500';
-      case 'shipped':
-        return 'bg-blue-500';
-      case 'processing':
-        return 'bg-yellow-500';
-      case 'cancelled':
-        return 'bg-red-500';
+      case "delivered":
+        return "bg-green-500";
+      case "shipped":
+        return "bg-blue-500";
+      case "processing":
+        return "bg-yellow-500";
+      case "cancelled":
+        return "bg-red-500";
       default:
-        return 'bg-gray-500';
+        return "bg-gray-500";
     }
   };
 
   // Get product details from your products state
   const getProductDetails = (productId) => {
-    return products.find(p => p._id === productId) || {};
+    return products.find((p) => p._id === productId) || {};
   };
 
   if (loading) {
@@ -68,93 +68,135 @@ const Orders = () => {
   }
 
   return (
-    <div className='border-t pt-16'>
-      <div className='text-2xl'>
-        <Title text1={'MY'} text2={'ORDERS'}/>
+    <div className="border-t pt-16">
+      <div className="text-2xl mb-6">
+        <Title text1={"MY"} text2={"ORDERS"} />
       </div>
 
       {orderData.length === 0 ? (
         <div className="text-center py-12">
-          <div className="bg-[#6d28d9]/10 p-6 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
-            <img 
-              src={assets.order_icon} 
-              className="w-12 opacity-70" 
-              alt="No orders" 
+          <div className="bg-cyan-100/40 dark:bg-cyan-900/30 p-6 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
+            <img
+              src={assets.order_icon}
+              className="w-12 opacity-70"
+              alt="No orders"
             />
           </div>
-          <h3 className="prata-regular text-2xl text-[#6d28d9] mb-2">
+          <h3 className="prata-regular text-2xl text-cyan-700 dark:text-cyan-400 mb-2">
             No Orders Found
           </h3>
-          <p className="text-gray-600 max-w-md mx-auto mb-6">
+          <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto mb-6">
             You haven't placed any orders yet.
           </p>
           <button
-            onClick={() => navigate('/menu')}
-            className="px-6 py-2 bg-[#6d28d9] text-white rounded-lg hover:bg-[#006641] transition-colors"
+            onClick={() => navigate("/products")}
+            className="px-6 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
           >
-            Browse Menu
+            Browse Laptops
           </button>
         </div>
       ) : (
-        <div>
+        <div className="space-y-8">
           {orderData.map((order) => (
-            <div key={order._id} className="mb-8 border rounded-lg p-4">
-              <div className="flex justify-between items-center mb-4 pb-2 border-b">
-                <div>
-                  <p className="font-medium">Order ID: <span className="text-gray-500">{order._id.slice(-8)}</span></p>
-                  <p className="text-sm">Date: <span className="text-gray-500">{new Date(order.date).toLocaleString()}</span></p>
+            <div
+              key={order._id}
+              className="border rounded-xl p-4 md:p-6 bg-white dark:bg-gray-800 shadow-md flex flex-col gap-4"
+            >
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 border-b pb-3">
+                <div className="flex flex-col gap-1">
+                  <span className="font-medium text-gray-700 dark:text-gray-200">
+                    Order ID:{" "}
+                    <span className="text-gray-500">{order._id.slice(-8)}</span>
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    Date: {new Date(order.date).toLocaleString()}
+                  </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className={`min-w-2 h-2 rounded-full ${getStatusColor(order.status)}`}></span>
-                  <p className='text-sm md:text-base capitalize'>{order.status.toLowerCase()}</p>
+                <div className="flex items-center gap-2 mt-2 md:mt-0">
+                  <span
+                    className={`w-2 h-2 rounded-full ${getStatusColor(
+                      order.status
+                    )}`}
+                  ></span>
+                  <span className="capitalize text-xs md:text-base font-semibold">
+                    {order.status.toLowerCase()}
+                  </span>
                 </div>
               </div>
-              
-              <div className="space-y-4">
+
+              <div className="divide-y divide-gray-100 dark:divide-gray-700">
                 {order.items.map((item, index) => {
                   const product = getProductDetails(item.productId);
-                  // Modern laptop variation display
                   const variation = item.variation || item.variations || {};
                   const variationDesc = [
                     variation.ram ? `RAM: ${variation.ram}` : null,
                     variation.storage ? `Storage: ${variation.storage}` : null,
                     variation.cpu ? `CPU: ${variation.cpu}` : null,
                     variation.gpu ? `GPU: ${variation.gpu}` : null,
-                  ].filter(Boolean).join(', ');
+                  ]
+                    .filter(Boolean)
+                    .join(", ");
                   return (
-                    <div key={index} className='py-2 flex items-start gap-4 text-sm'>
-                      <img 
-                        className='w-16 sm:w-20 rounded-lg object-cover' 
-                        src={product.image?.[0] || assets.placeholder} 
-                        alt={product.name || 'Product'} 
+                    <div
+                      key={index}
+                      className="py-3 flex flex-col sm:flex-row items-start gap-4 text-sm"
+                    >
+                      <img
+                        className="w-16 sm:w-20 rounded-lg object-cover border"
+                        src={product.image?.[0] || assets.placeholder}
+                        alt={product.name || "Product"}
                       />
                       <div className="flex-1">
-                        <p className='sm:text-base font-medium'>{product.name || 'Product'}</p>
-                        {variationDesc && <p className="text-xs text-gray-500">{variationDesc}</p>}
-                        <div className='flex items-center gap-3 mt-1'>
-                          <p>{currency}{item.price.toFixed(2)}</p>
-                          <p>Quantity: {item.quantity}</p>
+                        <p className="sm:text-base font-medium text-gray-800 dark:text-gray-100">
+                          {product.name || "Product"}
+                        </p>
+                        {variationDesc && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            {variationDesc}
+                          </p>
+                        )}
+                        <div className="flex flex-wrap items-center gap-3 mt-2">
+                          <span className="text-cyan-700 dark:text-cyan-300 font-semibold">
+                            {currency}
+                            {item.price.toFixed(2)}
+                          </span>
+                          <span className="text-gray-500">
+                            Qty: {item.quantity}
+                          </span>
                         </div>
                       </div>
                     </div>
                   );
                 })}
               </div>
-              
-              <div className="mt-4 pt-4 border-t flex justify-between items-center">
-                <div>
-                  <p className="font-medium">Payment Method: <span className="text-gray-500 capitalize">{order.paymentMethod}</span></p>
-                  <p className="font-medium">Payment Status: 
-                    <span className={`ml-2 ${order.payment ? 'text-green-600' : 'text-red-600'}`}>
-                      {order.payment ? 'Paid' : 'Pending'}
+
+              <div className="pt-4 border-t flex flex-col md:flex-row md:justify-between md:items-center gap-2">
+                <div className="flex flex-col gap-1">
+                  <span className="font-medium text-gray-700 dark:text-gray-200">
+                    Payment Method:{" "}
+                    <span className="text-gray-500 capitalize">
+                      {order.paymentMethod}
                     </span>
-                  </p>
+                  </span>
+                  <span className="font-medium text-gray-700 dark:text-gray-200">
+                    Payment Status:
+                    <span
+                      className={`ml-2 font-bold ${
+                        order.payment ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      {order.payment ? "Paid" : "Pending"}
+                    </span>
+                  </span>
                 </div>
                 <div className="text-right">
-                  <p className="font-medium">Total: {currency}{order.amount.toFixed(2)}</p>
-                  <button 
-                    onClick={loadOrderData} 
-                    className='mt-2 border border-[#6d28d9] text-[#6d28d9] px-4 py-1 text-sm font-medium rounded hover:bg-[#6d28d9] hover:text-white transition-colors'
+                  <span className="font-medium text-gray-700 dark:text-gray-200">
+                    Total: {currency}
+                    {order.amount.toFixed(2)}
+                  </span>
+                  <button
+                    onClick={loadOrderData}
+                    className="mt-2 border border-cyan-600 text-cyan-700 dark:text-cyan-300 px-4 py-1 text-sm font-medium rounded hover:bg-cyan-600 hover:text-white transition-colors"
                   >
                     Refresh Status
                   </button>
@@ -169,35 +211,6 @@ const Orders = () => {
 };
 
 export default Orders;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from 'react'
 // import { ShopContext } from '../context/ShopContext'
@@ -217,11 +230,11 @@ export default Orders;
 //       if (!token) return;
 
 //       const response = await axios.post(
-//         backendUrl + '/api/order/userorders', 
-//         {}, 
+//         backendUrl + '/api/order/userorders',
+//         {},
 //         { headers: { token } }
 //       );
-      
+
 //       if (response.data.success) {
 //         let allOrdersItem = [];
 //         response.data.orders.forEach((order) => {
@@ -282,10 +295,10 @@ export default Orders;
 //       {orderData.length === 0 ? (
 //         <div className="text-center py-12">
 //           <div className="bg-[#6d28d9]/10 p-6 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
-//             <img 
-//               src={assets.order_icon} 
-//               className="w-12 opacity-70" 
-//               alt="No orders" 
+//             <img
+//               src={assets.order_icon}
+//               className="w-12 opacity-70"
+//               alt="No orders"
 //             />
 //           </div>
 //           <h3 className="prata-regular text-2xl text-[#6d28d9] mb-2">
@@ -322,8 +335,8 @@ export default Orders;
 //                   <span className={`min-w-2 h-2 rounded-full ${getStatusColor(item.status)}`}></span>
 //                   <p className='text-sm md:text-base capitalize'>{item.status.toLowerCase()}</p>
 //                 </div>
-//                 <button 
-//                   onClick={() => loadOrderData()} 
+//                 <button
+//                   onClick={() => loadOrderData()}
 //                   className='border border-[#6d28d9] text-[#6d28d9] px-4 py-2 text-sm font-medium rounded hover:bg-[#6d28d9] hover:text-white transition-colors'
 //                 >
 //                   Refresh Status
@@ -338,30 +351,6 @@ export default Orders;
 // };
 
 // export default Orders;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from 'react'
 // import { ShopContext } from '../context/ShopContext'
@@ -394,9 +383,9 @@ export default Orders;
 //         })
 //         setorderData(allOrdersItem.reverse())
 //       }
-      
+
 //     } catch (error) {
-      
+
 //     }
 //   }
 

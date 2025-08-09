@@ -225,8 +225,9 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
               </button>
               {/* Dropdown Menu */}
               <div className="group-hover:block hidden absolute right-0 pt-4 z-20">
-                <div className="flex flex-col gap-3 w-36 py-3 px-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
+                <div className="flex flex-col gap-3 w-48 py-3 px-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
                   <button
+                    onClick={() => navigate("/profile")}
                     className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
                     aria-label="View my profile"
                   >
@@ -240,8 +241,29 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
                     Orders
                   </button>
                   <button
-                    onClick={logout}
+                    onClick={() => navigate("/cart")}
                     className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
+                    aria-label="View cart"
+                  >
+                    My Cart
+                  </button>
+                  <button
+                    onClick={() => navigate("/wishlist")}
+                    className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
+                    aria-label="Wishlist"
+                  >
+                    Wishlist
+                  </button>
+                  <button
+                    onClick={() => navigate("/settings")}
+                    className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
+                    aria-label="Account settings"
+                  >
+                    Account Settings
+                  </button>
+                  <button
+                    onClick={logout}
+                    className="cursor-pointer text-red-600 hover:text-white hover:bg-red-500 text-left rounded transition-colors"
                     aria-label="Logout"
                   >
                     Logout
@@ -298,8 +320,7 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
       <div
         className={`fixed top-0 right-0 bottom-0 w-full max-w-xs transition-transform duration-300 ease-in-out z-[100] ${
           visible ? "translate-x-0" : "translate-x-full"
-        } bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-2xl border-l border-gray-200 dark:border-gray-800 "+
-        (visible ? " bg-gradient-to-br from-cyan-500/30 via-purple-500/20 to-gray-900/80 dark:from-cyan-900/40 dark:via-purple-900/30 dark:to-gray-900/90" : "")`}
+        } bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-2xl border-l border-gray-200 dark:border-gray-800`}
         aria-hidden={!visible}
       >
         <div className="flex flex-col h-full">
@@ -386,7 +407,84 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
             >
               CONTACT
             </NavLink>
-
+            <NavLink
+              onClick={() => setVisible(false)}
+              className={({ isActive }) =>
+                `py-4 px-6 text-lg ${
+                  isActive
+                    ? "text-cyan-500 font-semibold bg-cyan-50 dark:bg-cyan-900/20"
+                    : "text-gray-700 dark:text-gray-300"
+                }`
+              }
+              to="/notifications"
+            >
+              NOTIFICATIONS
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              className={({ isActive }) =>
+                `py-4 px-6 text-lg ${
+                  isActive
+                    ? "text-cyan-500 font-semibold bg-cyan-50 dark:bg-cyan-900/20"
+                    : "text-gray-700 dark:text-gray-300"
+                }`
+              }
+              to="/profile"
+            >
+              PROFILE
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              className={({ isActive }) =>
+                `py-4 px-6 text-lg ${
+                  isActive
+                    ? "text-cyan-500 font-semibold bg-cyan-50 dark:bg-cyan-900/20"
+                    : "text-gray-700 dark:text-gray-300"
+                }`
+              }
+              to="/orders"
+            >
+              ORDERS
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              className={({ isActive }) =>
+                `py-4 px-6 text-lg ${
+                  isActive
+                    ? "text-cyan-500 font-semibold bg-cyan-50 dark:bg-cyan-900/20"
+                    : "text-gray-700 dark:text-gray-300"
+                }`
+              }
+              to="/cart"
+            >
+              MY CART
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              className={({ isActive }) =>
+                `py-4 px-6 text-lg ${
+                  isActive
+                    ? "text-cyan-500 font-semibold bg-cyan-50 dark:bg-cyan-900/20"
+                    : "text-gray-700 dark:text-gray-300"
+                }`
+              }
+              to="/wishlist"
+            >
+              WISHLIST
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              className={({ isActive }) =>
+                `py-4 px-6 text-lg ${
+                  isActive
+                    ? "text-cyan-500 font-semibold bg-cyan-50 dark:bg-cyan-900/20"
+                    : "text-gray-700 dark:text-gray-300"
+                }`
+              }
+              to="/settings"
+            >
+              ACCOUNT SETTINGS
+            </NavLink>
             <div className="px-6 mt-6 pt-4 border-t border-gray-200 dark:border-gray-800">
               <div className="flex justify-between items-center">
                 <span className="text-gray-700 dark:text-gray-400">
@@ -410,36 +508,14 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
                 </button>
               </div>
             </div>
-
-            {!token ? (
-              <button
-                onClick={() => {
-                  navigate("/login");
-                  setVisible(false);
-                }}
-                className="mt-8 mb-4 w-full py-3 rounded bg-cyan-500 text-white hover:bg-cyan-600 transition-colors text-lg font-semibold shadow"
-              >
-                Login / Signup
-              </button>
-            ) : (
+            {token && (
               <div className="mt-8 px-6 border-t border-gray-200 dark:border-gray-800 pt-4">
-                <h3 className="text-cyan-500 font-semibold mb-3">Account</h3>
-                <button
-                  onClick={() => {
-                    navigate("/orders");
-                    setVisible(false);
-                  }}
-                  className="py-3 cursor-pointer text-gray-700 dark:text-gray-300 border-t border-gray-200 dark:border-gray-700 w-full text-left"
-                  aria-label="View my orders"
-                >
-                  My Orders
-                </button>
                 <button
                   onClick={() => {
                     logout();
                     setVisible(false);
                   }}
-                  className="py-3 cursor-pointer text-gray-700 dark:text-gray-300 border-t border-b border-gray-200 dark:border-gray-700 w-full text-left"
+                  className="py-3 cursor-pointer text-red-600 hover:text-white hover:bg-red-500 w-full text-left rounded transition-colors border-t border-b border-gray-200 dark:border-gray-700"
                   aria-label="Logout"
                 >
                   Logout

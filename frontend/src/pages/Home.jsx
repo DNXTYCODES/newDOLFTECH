@@ -1,5 +1,6 @@
 import React from "react";
 import Hero from "../components/Hero";
+import BuildLaptopBanner from "../components/BuildLaptopBanner";
 import LatestCollection from "../components/LatestCollection";
 import BestSeller from "../components/BestSeller";
 import Testimonials from "../components/Testimonials";
@@ -22,6 +23,7 @@ const Home = () => {
       <LatestCollection />
       <BestSeller />
       <Testimonials />
+      <BuildLaptopBanner />
       <CustomerReviews />
       <DeliveryInfo />
       <AboutUs />
@@ -32,27 +34,6 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React from "react";
 // import Hero from "../components/Hero";
