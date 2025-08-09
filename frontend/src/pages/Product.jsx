@@ -79,15 +79,14 @@ const Product = () => {
   useEffect(() => {
     if (!productData) return;
 
+    // Always use the price of the selected variation if variations exist
     if (
       productData.variations &&
       Array.isArray(productData.variations) &&
       productData.variations.length > 0
     ) {
-      setCalculatedPrice(
-        productData.variations[selectedVariationIdx]?.price ||
-          productData.basePrice
-      );
+      const v = productData.variations[selectedVariationIdx];
+      setCalculatedPrice(typeof v?.price === "number" ? v.price : 0);
     } else {
       setCalculatedPrice(productData.basePrice);
     }

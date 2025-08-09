@@ -182,7 +182,11 @@ const ShopContextProvider = (props) => {
 
       // Always use variation price if variations exist
       let price = 0;
-      if (item.variations && typeof item.variations === "object" && Object.keys(item.variations).length > 0) {
+      if (
+        item.variations &&
+        typeof item.variations === "object" &&
+        Object.keys(item.variations).length > 0
+      ) {
         if (typeof item.variations.price === "number") {
           price = item.variations.price;
         } else {
