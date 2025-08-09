@@ -215,39 +215,47 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
         </button>
 
         <div className="group relative hidden sm:block">
-          <button
-            onClick={() => (token ? null : navigate("/login"))}
-            className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 transition-colors"
-            aria-label="User account"
-          >
-            <FiUser className="text-xl" />
-          </button>
-          {/* Dropdown Menu */}
-          {token && (
-            <div className="group-hover:block hidden absolute right-0 pt-4 z-20">
-              <div className="flex flex-col gap-3 w-36 py-3 px-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
-                <button
-                  className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
-                  aria-label="View my profile"
-                >
-                  My Profile
-                </button>
-                <button
-                  onClick={() => navigate("/orders")}
-                  className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
-                  aria-label="View my orders"
-                >
-                  Orders
-                </button>
-                <button
-                  onClick={logout}
-                  className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
-                  aria-label="Logout"
-                >
-                  Logout
-                </button>
+          {token ? (
+            <>
+              <button
+                className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 transition-colors"
+                aria-label="User account"
+              >
+                <FiUser className="text-xl" />
+              </button>
+              {/* Dropdown Menu */}
+              <div className="group-hover:block hidden absolute right-0 pt-4 z-20">
+                <div className="flex flex-col gap-3 w-36 py-3 px-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
+                  <button
+                    className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
+                    aria-label="View my profile"
+                  >
+                    My Profile
+                  </button>
+                  <button
+                    onClick={() => navigate("/orders")}
+                    className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
+                    aria-label="View my orders"
+                  >
+                    Orders
+                  </button>
+                  <button
+                    onClick={logout}
+                    className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-cyan-500 text-left"
+                    aria-label="Logout"
+                  >
+                    Logout
+                  </button>
+                </div>
               </div>
-            </div>
+            </>
+          ) : (
+            <button
+              onClick={() => navigate("/login")}
+              className="ml-2 px-4 py-2 rounded bg-cyan-500 text-white hover:bg-cyan-600 transition-colors text-sm font-semibold shadow"
+            >
+              Login / Signup
+            </button>
           )}
         </div>
 
@@ -403,7 +411,17 @@ const Navbar = ({ toggleDarkMode, isDarkMode }) => {
               </div>
             </div>
 
-            {token && (
+            {!token ? (
+              <button
+                onClick={() => {
+                  navigate("/login");
+                  setVisible(false);
+                }}
+                className="mt-8 mb-4 w-full py-3 rounded bg-cyan-500 text-white hover:bg-cyan-600 transition-colors text-lg font-semibold shadow"
+              >
+                Login / Signup
+              </button>
+            ) : (
               <div className="mt-8 px-6 border-t border-gray-200 dark:border-gray-800 pt-4">
                 <h3 className="text-cyan-500 font-semibold mb-3">Account</h3>
                 <button
