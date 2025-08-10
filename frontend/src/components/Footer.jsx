@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaInstagram, FaWhatsapp, FaTwitter } from 'react-icons/fa';
+import React from "react";
+import { FaInstagram, FaWhatsapp, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -53,10 +53,35 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-gray-300">
-              <li><a href="/" className="hover:text-cyan-400 transition-colors">Home</a></li>
-              <li><a href="#about" className="hover:text-cyan-400 transition-colors">About Us</a></li>
-              <li><a href="/products" className="hover:text-cyan-400 transition-colors">Collection</a></li>
-              <li><a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a></li>
+              <li>
+                <a href="/" className="hover:text-cyan-400 transition-colors">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#about"
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/products"
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  Collection
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -65,17 +90,26 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Customer Service</h4>
             <ul className="space-y-2 text-gray-300">
               <li>
-                <a href="#delivery" className="hover:text-cyan-400 transition-colors">
+                <a
+                  href="#delivery"
+                  className="hover:text-cyan-400 transition-colors"
+                >
                   Delivery Info
                 </a>
               </li>
               <li>
-                <a href="#warranty" className="hover:text-cyan-400 transition-colors">
+                <a
+                  href="#warranty"
+                  className="hover:text-cyan-400 transition-colors"
+                >
                   Warranty Policy
                 </a>
               </li>
               <li>
-                <a href="#faq" className="hover:text-cyan-400 transition-colors">
+                <a
+                  href="#faq"
+                  className="hover:text-cyan-400 transition-colors"
+                >
                   FAQ
                 </a>
               </li>
@@ -88,7 +122,7 @@ const Footer = () => {
             <p className="text-gray-300 mb-4">
               Subscribe for exclusive deals and gaming news
             </p>
-            <form className="flex" onSubmit={e => e.preventDefault()}>
+            <form className="flex" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
                 placeholder="Your email"
@@ -108,7 +142,8 @@ const Footer = () => {
         <div className="border-t border-white/20 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-300 mb-4 md:mb-0">
-              © {new Date().getFullYear()} Dolftech Gaming Solutions. All rights reserved.
+              © {new Date().getFullYear()} Dolftech Gaming Solutions. All rights
+              reserved.
             </p>
             <div className="text-sm text-gray-400">
               3/9 Olu Koleosho Street, Ikeja, Lagos • +234 811 853 2900
@@ -121,26 +156,6 @@ const Footer = () => {
 };
 
 export default Footer;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React from 'react';
 // import { FiFacebook, FiInstagram, FiTwitter, FiLinkedin } from 'react-icons/fi';
@@ -173,7 +188,7 @@ export default Footer;
 //               </a>
 //             </div>
 //           </div>
-          
+
 //           <div>
 //             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
 //             <ul className="space-y-2 text-gray-300">
@@ -184,7 +199,7 @@ export default Footer;
 //               <li><a href="#workshops" className="hover:text-amber-500 transition-colors">Workshops</a></li>
 //             </ul>
 //           </div>
-          
+
 //           <div>
 //             <h4 className="text-lg font-semibold mb-4">Customer Service</h4>
 //             <ul className="space-y-2 text-gray-300">
@@ -195,19 +210,19 @@ export default Footer;
 //               {/* <li><a href="#" className="hover:text-amber-500 transition-colors">Privacy Policy</a></li> */}
 //             </ul>
 //           </div>
-          
+
 //           <div>
 //             <h4 className="text-lg font-semibold mb-4">Newsletter</h4>
 //             <p className="text-gray-300 mb-4">
 //               Subscribe for exclusive offers and fragrance insights
 //             </p>
 //             <form className="flex">
-//               <input 
-//                 type="email" 
-//                 placeholder="Your email" 
+//               <input
+//                 type="email"
+//                 placeholder="Your email"
 //                 className="px-4 py-2 rounded-l-lg w-full text-purple-900"
 //               />
-//               <button 
+//               <button
 //                 type="submit"
 //                 className="bg-amber-500 text-purple-900 px-4 py-2 rounded-r-lg font-bold hover:bg-amber-400 transition-colors"
 //               >
@@ -216,31 +231,31 @@ export default Footer;
 //             </form>
 //           </div>
 //         </div>
-        
+
 //         <div className="border-t border-white/20 pt-8">
 //           <div className="flex flex-col md:flex-row justify-between items-center">
 //             <p className="text-gray-300 mb-4 md:mb-0">
 //               © {new Date().getFullYear()} Scent Design Nigeria Limited. All rights reserved.
 //             </p>
 //             {/* <div className="flex items-center space-x-4">
-//               <img 
-//                 src={assets.opay} 
-//                 alt="OPay" 
+//               <img
+//                 src={assets.opay}
+//                 alt="OPay"
 //                 className="h-8 w-auto opacity-80"
 //               />
-//               <img 
-//                 src={assets.palmpay} 
-//                 alt="PalmPay" 
+//               <img
+//                 src={assets.palmpay}
+//                 alt="PalmPay"
 //                 className="h-8 w-auto opacity-80"
 //               />
-//               <img 
-//                 src={assets.verve} 
-//                 alt="Verve" 
+//               <img
+//                 src={assets.verve}
+//                 alt="Verve"
 //                 className="h-8 w-auto opacity-80"
 //               />
-//               <img 
-//                 src={assets.mastercard} 
-//                 alt="Mastercard" 
+//               <img
+//                 src={assets.mastercard}
+//                 alt="Mastercard"
 //                 className="h-8 w-auto opacity-80"
 //               />
 //             </div> */}
@@ -258,30 +273,12 @@ export default Footer;
 
 // export default Footer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import React from "react";
 // import { Link } from "react-router-dom";
 
 // const Footer = () => {
 //   const currentYear = new Date().getFullYear();
-  
+
 //   return (
 //     <footer className="bg-[#008753] text-white">
 //       <div className="max-w-6xl mx-auto px-4 py-12">
@@ -292,25 +289,25 @@ export default Footer;
 //               Ediere <span className="text-amber-400">Chops</span>
 //             </h2>
 //             <p className="mb-4 max-w-md">
-//               Authentic Nigerian cuisine prepared with traditional recipes and fresh ingredients. 
+//               Authentic Nigerian cuisine prepared with traditional recipes and fresh ingredients.
 //               Bringing the flavors of Africa to your table since 2025.
 //             </p>
 //             <div className="flex space-x-4">
-//               <a href="https://www.instagram.com/edierechops" 
+//               <a href="https://www.instagram.com/edierechops"
 //                  aria-label="Visit our Instagram page"
 //                  className="bg-white/10 p-2 rounded-full hover:bg-amber-500 transition-colors">
 //                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
 //                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
 //                 </svg>
 //               </a>
-//               <a href="https://www.facebook.com/edierechops" 
+//               <a href="https://www.facebook.com/edierechops"
 //                  aria-label="Visit our Facebook page"
 //                  className="bg-white/10 p-2 rounded-full hover:bg-amber-500 transition-colors">
 //                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
 //                   <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
 //                 </svg>
 //               </a>
-//               <a href="https://twitter.com/edierechops" 
+//               <a href="https://twitter.com/edierechops"
 //                  aria-label="Visit our Twitter page"
 //                  className="bg-white/10 p-2 rounded-full hover:bg-amber-500 transition-colors">
 //                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -383,13 +380,13 @@ export default Footer;
 //             Subscribe to Our Newsletter
 //           </h3>
 //           <form className="flex flex-col sm:flex-row gap-3 max-w-xl">
-//             <input 
-//               type="email" 
-//               placeholder="Your email address" 
+//             <input
+//               type="email"
+//               placeholder="Your email address"
 //               className="flex-1 px-4 py-2 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500"
 //               aria-label="Email for newsletter subscription"
 //             />
-//             <button 
+//             <button
 //               type="submit"
 //               className="px-6 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium"
 //             >
@@ -403,7 +400,7 @@ export default Footer;
 //       <div className="bg-[#006641] py-5">
 //         <div className="max-w-6xl mx-auto px-4 text-center text-sm">
 //           <p>
-//             &copy; {currentYear} Ediere Chops. All rights reserved. 
+//             &copy; {currentYear} Ediere Chops. All rights reserved.
 //             <span className="mx-2">|</span>
 //             <Link to="/privacy" className="hover:text-amber-400 transition-colors mx-2">Privacy Policy</Link>
 //             <span className="mx-2">|</span>
@@ -419,22 +416,6 @@ export default Footer;
 // };
 
 // export default Footer;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React from "react";
 // import { assets } from "../assets/assets";

@@ -70,6 +70,18 @@ const ShopContextProvider = (props) => {
       return null;
     }
 
+    // Validate variation price for laptops
+    if (
+      product.variations &&
+      Array.isArray(product.variations) &&
+      product.variations.length > 0
+    ) {
+      if (!variations || typeof variations.price !== "number" || variations.price <= 0) {
+        toast.error("Please select a valid laptop variation with price.");
+        return null;
+      }
+    }
+
     // Create a unique key for this combination of variations
     const variationKey = JSON.stringify(variations);
     const cartItemKey = `${itemId}-${variationKey}`;

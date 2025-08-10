@@ -3,27 +3,35 @@ import React from "react";
 const brands = [
   {
     name: "Alienware",
-    logo: "https://res.cloudinary.com/dolftechn/image/upload/v1716379241/alienware-logo_uwbqnx.svg"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Alienware_logo.svg"
   },
   {
     name: "Razer",
-    logo: "https://res.cloudinary.com/dolftechn/image/upload/v1716379241/razer-logo_zrsb0r.svg"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/29/Razer_logo.svg"
   },
   {
     name: "ASUS ROG",
-    logo: "https://res.cloudinary.com/dolftechn/image/upload/v1716379241/rog-logo_tykqo5.svg"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/6/6e/ROG_%28Republic_of_Gamers%29_logo.svg"
   },
   {
     name: "MSI",
-    logo: "https://res.cloudinary.com/dolftechn/image/upload/v1716379241/msi-logo_zzb7jq.svg"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Msi-Logo.svg"
   },
   {
     name: "Acer Predator",
-    logo: "https://res.cloudinary.com/dolftechn/image/upload/v1716379241/predator-logo_ivk5nl.svg"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Acer_Predator_logo.svg"
   },
   {
     name: "Lenovo Legion",
-    logo: "https://res.cloudinary.com/dolftechn/image/upload/v1716379241/legion-logo_d0wqpk.svg"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Lenovo_Legion_logo.svg"
+  },
+  {
+    name: "HP Omen",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2e/OMEN_by_HP_logo.svg"
+  },
+  {
+    name: "Dell G Series",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/48/Dell_Logo.svg"
   }
 ];
 

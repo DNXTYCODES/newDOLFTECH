@@ -13,6 +13,14 @@ const paystack = new Paystack(process.env.PAYSTACK_SECRET_KEY);
 
 // Helper function to create order
 const createOrder = async (userId, items, amount, address, paymentMethod, currency = 'EUR') => {
+  // Validate all items: must have variation.price > 0 if variation exists
+  for (const item of items) {
+    if (item.variations && Object.keys(item.variations).length > 0) {
+      if (typeof item.variations.price !== "number" || item.variations.price <= 0) {
+        throw new Error("Each item variation must have a valid price > 0.");
+      }
+    }
+  }
   const orderData = {
     userId,
     items,
@@ -24,7 +32,6 @@ const createOrder = async (userId, items, amount, address, paymentMethod, curren
     date: Date.now(),
     status: 'Order Received'
   };
-  
   const newOrder = new orderModel(orderData);
   await newOrder.save();
   return newOrder;

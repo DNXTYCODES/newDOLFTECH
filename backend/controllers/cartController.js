@@ -12,10 +12,13 @@ const addToCart = async (req, res) => {
     const variationsKey = JSON.stringify(variations || {});
     const cartItemKey = `${itemId}-${variationsKey}`;
 
-    // Always store price in variations if present
+
+    // Always store price in variations and validate
     let variationsToStore = { ...(variations || {}) };
-    if (variations && typeof variations.price === "number") {
+    if (variations && typeof variations.price === "number" && variations.price > 0) {
       variationsToStore.price = variations.price;
+    } else if (variations && Object.keys(variations).length > 0) {
+      return res.json({ success: false, message: "Invalid variation price. Please select a valid laptop variation." });
     }
 
     if (cartData[cartItemKey]) {

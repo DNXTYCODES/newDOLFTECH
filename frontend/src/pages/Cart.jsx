@@ -15,26 +15,30 @@ const Cart = () => {
       const tempData = Object.entries(cartItems)
         .map(([cartItemKey, cartItem]) => {
           const productData = products.find(p => p._id === cartItem.productId);
-          
-          // Calculate price based on variations
-          let price = productData?.basePrice || 0;
-          
-          if (cartItem.variations?.wrap && productData?.variations?.wrap?.available) {
-            price = productData.variations.wrap.price;
-          } 
-          else if (cartItem.variations?.size) {
-            const sizeObj = productData?.variations?.sizes?.find(s => s.size === cartItem.variations.size);
-            if (sizeObj) price = sizeObj.price;
+          // Calculate price: always use variation price if present, else basePrice
+          let price = 0;
+          if (
+            cartItem.variations &&
+            typeof cartItem.variations === "object" &&
+            Object.keys(cartItem.variations).length > 0 &&
+            typeof cartItem.variations.price === "number"
+          ) {
+            price = cartItem.variations.price;
+          } else {
+            price = productData?.basePrice || 0;
           }
-          
-          // Generate variation description
+
+          // Generate variation description for laptops
           let variationDesc = "";
-          if (cartItem.variations?.base) variationDesc += `Base: ${cartItem.variations.base}, `;
-          if (cartItem.variations?.side) variationDesc += `Side: ${cartItem.variations.side}, `;
-          if (cartItem.variations?.size) variationDesc += `Size: ${cartItem.variations.size}, `;
-          if (cartItem.variations?.wrap) variationDesc += `Wrap: Yes, `;
-          variationDesc = variationDesc.replace(/,\s*$/, "");
-          
+          if (cartItem.variations) {
+            const v = cartItem.variations;
+            if (v.ram) variationDesc += `RAM: ${v.ram}, `;
+            if (v.storage) variationDesc += `Storage: ${v.storage}, `;
+            if (v.cpu) variationDesc += `CPU: ${v.cpu}, `;
+            if (v.gpu) variationDesc += `GPU: ${v.gpu}, `;
+            variationDesc = variationDesc.replace(/,\s*$/, "");
+          }
+
           return {
             cartItemKey,
             quantity: cartItem.quantity,
@@ -45,7 +49,6 @@ const Cart = () => {
           };
         })
         .filter(item => item.quantity > 0);
-      
       setCartData(tempData);
       setLoading(false);
     }

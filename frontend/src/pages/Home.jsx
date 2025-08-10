@@ -18,12 +18,12 @@ const Home = () => {
     <div className="bg-gray-50 dark:bg-gray-900 theme-transition">
       {/* <Chatbot /> */}
       <Hero />
-      <BrandsShowcase />
       <WarrantyBanner />
       <LatestCollection />
       <BestSeller />
       <Testimonials />
       <BuildLaptopBanner />
+      <BrandsShowcase />
       <CustomerReviews />
       <DeliveryInfo />
       <AboutUs />

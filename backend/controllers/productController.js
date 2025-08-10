@@ -88,7 +88,8 @@ const addProduct = async (req, res) => {
       })
     );
 
-    // Parse variations if provided
+
+    // Parse and validate variations if provided
     let parsedVariations = [];
     if (variations) {
       try {
@@ -100,8 +101,16 @@ const addProduct = async (req, res) => {
           message: "Invalid variations format. Must be valid JSON.",
         });
       }
+      // Validate all required fields and price
+      for (const v of parsedVariations) {
+        if (!v.ram || !v.storage || !v.cpu || typeof v.price !== "number" || v.price <= 0) {
+          return res.json({
+            success: false,
+            message: "Each variation must have RAM, Storage, CPU, and a valid price > 0.",
+          });
+        }
+      }
     }
-
     // Normalize all prices in variations
     parsedVariations = normalizeVariations(parsedVariations);
 
@@ -206,7 +215,8 @@ const updateProduct = async (req, res) => {
     const bestsellerBool = bestseller === "true" || bestseller === true;
     const inStockBool = inStock === "true" || inStock === true;
 
-    // Parse variations if provided
+
+    // Parse and validate variations if provided
     let parsedVariations = [];
     if (variations) {
       try {
@@ -218,8 +228,16 @@ const updateProduct = async (req, res) => {
           message: "Invalid variations format. Must be valid JSON.",
         });
       }
+      // Validate all required fields and price
+      for (const v of parsedVariations) {
+        if (!v.ram || !v.storage || !v.cpu || typeof v.price !== "number" || v.price <= 0) {
+          return res.json({
+            success: false,
+            message: "Each variation must have RAM, Storage, CPU, and a valid price > 0.",
+          });
+        }
+      }
     }
-
     // Normalize all fields in variations (ram, storage, cpu, gpu, price)
     parsedVariations = normalizeVariations(parsedVariations);
 
